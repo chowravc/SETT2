@@ -1,0 +1,10 @@
+*.dat
+*.avi
+*.mp4
+*.swp
+**/dataFolder/*
+**/dataFolderThousand/*
+**/accumulated/*
+**/__pycache__/*
+**/run*/*
+**/tmpFolder/

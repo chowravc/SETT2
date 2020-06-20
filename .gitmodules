@@ -1,0 +1,24 @@
+[submodule "artifacts"]
+	path = artifacts
+	url = https://github.com/mlfilms/artifacts.git
+	branch = master
+[submodule "simulations"]
+	path = simulations
+	url = https://github.com/mlfilms/simulations.git
+	branch = master
+[submodule "ImageAnnotation"]
+	path = ImageAnnotation
+	url = https://github.com/mlfilms/ImageAnnotation.git
+	branch = master
+[submodule "smartNoise"]
+	path = smartNoise
+	url = https://github.com/mlfilms/smartNoise.git
+	branch = master
+[submodule "mAP"]
+	path = mAP
+	url = https://github.com/mlfilms/mAP.git
+	branch = master
+[submodule "darkflow"]
+	path = darkflow
+	url = https://github.com/mlfilms/darkflow.git
+	branch = master
