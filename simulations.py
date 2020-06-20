@@ -20,6 +20,7 @@ def executeFile(filePath,functionName,cfg):
 
     sim = imp.load_source('packages', exFile)
     method = getattr(sim,functionName)
+    print(method)
     method(cfg)
 
     os.chdir(mainDir)
