@@ -4,7 +4,7 @@ import imp
 
 def simulate():
 
-    numImages = 1
+    numImages = 50
     imageDims = [250, 200]
     maxDefects = 50
     minDefects = 10
