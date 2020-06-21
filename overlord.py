@@ -1,14 +1,6 @@
-import yaml
-import argparse
-import importlib
 import os
-import shutil
 import sys
 import imp
-import glob
-import numpy as np
-import pandas as pd
-import warnings
 
 def simulate():
 
@@ -19,11 +11,12 @@ def simulate():
     decrossMin = 50
     decrossMax = 50
 
+    simString = 'simulations/randomDefects/runSim.py'
+    functionName = 'runSim'
+
     home = os.getcwd()
 
     print("Running Simulation")
-    simString = 'simulations/randomDefects/runSim.py'
-    functionName = 'runSim'
 
     path, exFile = os.path.split(simString)
     fullPath = os.path.join(home, path)
@@ -32,9 +25,9 @@ def simulate():
 
     sim = imp.load_source('packages', exFile)
 
-    method = getattr(sim,functionName)
+    runSimulation = getattr(sim,functionName)
 
-    method(home, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
+    runSimulation(home, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
 
     os.chdir(home)
 
