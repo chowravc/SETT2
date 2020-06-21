@@ -14,17 +14,11 @@ def runSimLocal():
         cfg = yaml.safe_load(ymlfile)
     runSim(cfg)
 
-def runSim(cfg):
-
-    numImages = cfg['simulation']['images']
-    imageDims = [cfg['simulation']['xDim'],cfg['simulation']['yDim']]
-    maxDefects = cfg['simulation']['maxDefects']
-    minDefects = cfg['simulation']['minDefects']
-
+def runSim(home, numImages, imageDims, maxDefects, minDefects, decrossMax, decrossMin):
 
     print("Generating Defects")
     create_defects(numImages,imageDims,[minDefects,maxDefects])
-    fileConvertPath = os.path.join(cfg['temp']['rootDir'],cfg['paths']['fileConvert'])
+    fileConvertPath = os.path.join(home, 'ImageAnnotation')
     mainDir = os.getcwd()
     outDir = os.path.join(os.getcwd(),'accumulated')
 
@@ -77,11 +71,11 @@ def runSim(cfg):
     os.chdir(outDir)
     from imgGen import imgGenRand
     print("Generating Images")
-    imgGenRand(cfg['simulation']['decrossMin'],cfg['simulation']['decrossMax'])
+    imgGenRand(decrossMin, decrossMax)
     sys.path.append(fileConvertPath)
     print("Generating xml files")
     from fileConvertBatch import fileConvertBatch
-    fileConvertBatch(outDir,[cfg['simulation']['xDim'],cfg['simulation']['yDim']],'txt')
+    fileConvertBatch(outDir, imageDims, 'txt')
 
 
     os.chdir(mainDir)
