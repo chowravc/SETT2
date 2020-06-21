@@ -9,25 +9,10 @@ import glob
 import numpy as np
 import pandas as pd
 
-def executeFile(filePath,functionName,cfg):
-    #this function will execute a script, using the folder
-    # the script is located in as the working directory
-    path, exFile = os.path.split(filePath)
+def simulate():
     mainDir = os.getcwd()
-    fullPath = os.path.join(mainDir,path)
-    sys.path.append(fullPath)
-    os.chdir(fullPath)
 
-    sim = imp.load_source('packages', exFile)
-    method = getattr(sim,functionName)
-    method(cfg)
-
-    os.chdir(mainDir)
-
-def executeConfig(configName):
-    mainDir = os.getcwd()
-    with open(configName,'r') as ymlfile:
-        cfg = yaml.safe_load(ymlfile)
+    cfg = {'meta': {'runName': 'simulationTest', 'saveRun': False}, 'paths': {'simRunner': 'simulations/randomDefects/runSim.py', 'simFunc': 'runSim', 'fileConvert': 'ImageAnnotation'}, 'simulation': {'images': 1, 'numDefects': 20, 'minDefects': 10, 'maxDefects': 50, 'xDim': 250, 'yDim': 200, 'decrossMax': 50, 'decrossMin': 50}}
 
     saveDir = os.path.join('runData',cfg['meta']['runName']) #
     if cfg['meta']['saveRun']:
@@ -38,26 +23,31 @@ def executeConfig(configName):
             yaml.dump(cfg, yaml_file, default_flow_style=False)
 
     cfg["temp"] = {}
-    cfg["temp"]["rootDir"] = mainDir
+    cfg["temp"]["rootDir"] = os.getcwd()
 
     print("Running Simulation")
-    simString = cfg['paths']['simRunner']
-    functionName = cfg['paths']['simFunc']
-    print(functionName)
+    simString = 'simulations/randomDefects/runSim.py'
+    functionName = 'runSim'
 
-    executeFile(simString,functionName,cfg)
+    #this function will execute a script, using the folder
+    # the script is located in as the working directory
+    path, exFile = os.path.split(simString)
+    mainDir = os.getcwd()
+    fullPath = os.path.join(mainDir,path)
+    sys.path.append(fullPath)
+    os.chdir(fullPath)
 
-    print(cfg['temp']['rootDir'])
-    os.chdir(cfg['temp']['rootDir'])
+    sim = imp.load_source('packages', exFile)
+    print()
+    print(sim)
+    print()
+    method = getattr(sim,functionName)
+    method(cfg)
+
+    os.chdir(mainDir)
+
+    os.chdir(mainDir)
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("config",nargs='?',type = str, default='config.yml', help='config file to execute')
-    parser.add_argument("--reeval", dest='reeval', default='False', action='store_const', const=True, help='config file to execute')
-    args= parser.parse_args()
-    config = args.config
-
-    with open(config,'r') as ymlfile:
-        cfg = yaml.safe_load(ymlfile)
-    executeConfig(config)
+    simulate()
