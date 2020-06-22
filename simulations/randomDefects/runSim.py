@@ -13,8 +13,8 @@ def runSim(home, numImages, imageDims, maxDefects, minDefects, decrossMax, decro
     print("Generating Defects")
     create_defects(numImages,imageDims,[minDefects,maxDefects])
     fileConvertPath = os.path.join(home, 'ImageAnnotation')
-    mainDir = os.getcwd()
-    outDir = os.path.join(os.getcwd(),'accumulated')
+    outDir = os.path.join(home,'accumulated')
+    print(outDir)
 
     #print(outDir)
     if os.path.exists(outDir):
@@ -72,7 +72,7 @@ def runSim(home, numImages, imageDims, maxDefects, minDefects, decrossMax, decro
     fileConvertBatch(outDir, imageDims, 'txt')
 
 
-    os.chdir(mainDir)
+    os.chdir(home)
     from markSim import markSim
     print("Generating Simulation Annotated Images")
     markSim()
