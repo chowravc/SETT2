@@ -2,7 +2,7 @@ import os
 import sys
 import imp
 
-def simulate(numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax):
+def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax):
 
     simString = 'simulations/randomDefects/runSim.py'
     functionName = 'runSim'
@@ -20,6 +20,6 @@ def simulate(numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMa
 
     runSimulation = getattr(sim,functionName)
 
-    runSimulation(home, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
+    runSimulation(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
 
     os.chdir(home)

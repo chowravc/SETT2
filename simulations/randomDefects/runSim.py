@@ -8,19 +8,18 @@ from datAnnotate import datAnnotate
 #from addArtifacts import addArtifacts
 from create_defects import create_defects
 
-def runSim(home, numImages, imageDims, maxDefects, minDefects, decrossMax, decrossMin):
+def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMax, decrossMin):
 
     print("Generating Defects")
     create_defects(numImages,imageDims,[minDefects,maxDefects])
     fileConvertPath = os.path.join(home, 'ImageAnnotation')
-    outDir = os.path.join(home,'accumulated')
-    print(outDir)
+    outDir = os.path.join(home, runName)
 
-    #print(outDir)
     if os.path.exists(outDir):
-        shutil.rmtree(outDir)
-    #if not os.path.exists(outDir):
-    os.makedirs(outDir)
+        print("A previous run of the same name already exists. Please delete it or rename the run.")
+        return
+    if not os.path.exists(outDir):
+        os.makedirs(outDir)
         
     allDDat = glob.glob('dataFolder/**/**/defect*.dat')
     print("Transfering defect.dat files")
@@ -69,13 +68,13 @@ def runSim(home, numImages, imageDims, maxDefects, minDefects, decrossMax, decro
     sys.path.append(fileConvertPath)
     print("Generating xml files")
     from fileConvertBatch import fileConvertBatch
-    fileConvertBatch(outDir, imageDims, 'txt')
+    fileConvertBatch(outDir, imageDims, 'custom')
 
 
     os.chdir(home)
     from markSim import markSim
     print("Generating Simulation Annotated Images")
-    markSim()
+    markSim(home, runName)
     #print("Generating Noisy Training Images")
     #addArtifacts()
     print("Done")

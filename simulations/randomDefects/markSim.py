@@ -32,18 +32,12 @@ def pointing(original_img , predictions):
     
     
     
-def markSim():
-    folder = 'accumulated/'
-    simmarkedFolder = 'accumulated/SIMMARKED/'
-    files = glob.glob(folder+'*defect*.dat')
-    
-   
+def markSim(home, runName):
+    simmarkedFolder = home + runName + '/SIMMARKED/'
+    files = glob.glob(runName+'/*defect*.dat')
 
     if not os.path.exists(simmarkedFolder):
         os.makedirs(simmarkedFolder)
-    
-    #print(len(files))
-    #filename = 'E:\\Projects\\fake\\simulations\\fortran\\LandauGin\\run20190529_131519\\data-k-1.00-beta-10.000-mu-0.000\\defect74.dat'
     for file in files:
         fExt = file.split('.')
         fpath = fExt[:-1]
@@ -52,7 +46,7 @@ def markSim():
         
         #print(fpath)
         imgFile = '.'.join(fpath)+'.jpg'
-        outImg = folder+'SIMMARKED/'+fpathName+'SIMMARKED.jpg'
+        outImg = simmarkedFolder+fpathName+'SIMMARKED.jpg'
         data = numpy.loadtxt(file)
         locs = numpy.where(abs(data)==1)
         x = locs[0]
