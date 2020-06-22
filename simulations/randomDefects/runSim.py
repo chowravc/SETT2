@@ -8,12 +8,6 @@ from datAnnotate import datAnnotate
 #from addArtifacts import addArtifacts
 from create_defects import create_defects
 
-
-def runSimLocal():
-    with open("config.yml",'r') as ymlfile:
-        cfg = yaml.safe_load(ymlfile)
-    runSim(cfg)
-
 def runSim(home, numImages, imageDims, maxDefects, minDefects, decrossMax, decrossMin):
 
     print("Generating Defects")
@@ -85,8 +79,3 @@ def runSim(home, numImages, imageDims, maxDefects, minDefects, decrossMax, decro
     #print("Generating Noisy Training Images")
     #addArtifacts()
     print("Done")
-
-if __name__ == '__main__':
-    runSimLocal()
-
-
