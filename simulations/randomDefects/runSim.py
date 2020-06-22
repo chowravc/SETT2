@@ -41,7 +41,7 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
         
     allODat = glob.glob('dataFolder/**/**/out*.dat')
     
-    datAnnotate()
+    datAnnotate(home, runName)
     print("Transfering out.dat files")
     for dat in allODat:
         drive,pathAndFile = os.path.splitdrive(dat)
