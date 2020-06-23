@@ -165,8 +165,6 @@ def create_defects(numImages,dims,numDefects):
     baseDir = os.getcwd()
     dims.reverse()
 
-    os.makedirs(dir)
-
     decross = 50
     iterations = 10
 
@@ -184,7 +182,7 @@ def create_defects(numImages,dims,numDefects):
     imDir = os.path.join(runDir,'im')
     safeMake(dataDir2)
     safeMake(imDir)
-    shutil.copyfile('randomD.py',os.path.join(runDir,'randomD.py'))
+    #shutil.copyfile('randomD.py',os.path.join(runDir,'randomD.py'))
     sys.path.append(runDir)
     os.chdir(runDir)
 
