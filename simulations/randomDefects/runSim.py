@@ -15,7 +15,7 @@ import numpy as np
 
 import datetime
 import random
-from joblib import Parallel,delayed
+from joblib import Parallel, delayed
 
 # ------------- RandomD imports --------------
 
@@ -161,6 +161,9 @@ def datAnnotate():
 #                                      Create Defects Class         
 # ------------------------------------------------------------------------------------------
 
+
+
+
 def create_defects(numImages,dims,numDefects):
     baseDir = os.getcwd()
     dims.reverse()
@@ -187,13 +190,12 @@ def create_defects(numImages,dims,numDefects):
     os.chdir(runDir)
 
     def process(i,defects):
-        #print(i)
         outdat = os.path.join(dataDir2,'out%d.dat' %(i))
         defectdat = os.path.join(dataDir2,'defect%d.dat' %(i))
         img = os.path.join(imDir,'image%d.bmp' %(i))
         randomD(decross,dims,defects, [outdat,defectdat,img])
 
-    Parallel(n_jobs=-1)(delayed(process)(i, random.randint(numDefects[0],numDefects[1])) for i in range(0,numImages))
+    Parallel(n_jobs=1)(delayed(process)(i, random.randint(numDefects[0],numDefects[1])) for i in range(0,numImages))
 
     os.chdir(baseDir)
 
