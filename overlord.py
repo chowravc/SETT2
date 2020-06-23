@@ -2,12 +2,19 @@ import os
 import sys
 import imp
 
-def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax):
+def simulate():
+
+    numImages = 50
+    imageDims = [250, 200]
+    maxDefects = 50
+    minDefects = 10
+    decrossMin = 50
+    decrossMax = 50
 
     simString = 'simulations/randomDefects/runSim.py'
     functionName = 'runSim'
 
-    home = os.getcwd() + '/defectSimulation/'
+    home = os.getcwd()
 
     print("Running Simulation")
 
@@ -20,6 +27,10 @@ def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, 
 
     runSimulation = getattr(sim,functionName)
 
-    runSimulation(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
+    runSimulation(home, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
 
     os.chdir(home)
+
+if __name__ == '__main__':
+
+    simulate()
