@@ -11,6 +11,8 @@ from create_defects import create_defects
 def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMax, decrossMin):
 
     print("Generating Defects")
+
+    #Creates Defects
     create_defects(numImages,imageDims,[minDefects,maxDefects])
     fileConvertPath = os.path.join(home, 'ImageAnnotation')
     outDir = os.path.join(home, runName)
@@ -20,21 +22,18 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
         return
     if not os.path.exists(outDir):
         os.makedirs(outDir)
-        
+
+    #Transfers generated files
     allDDat = glob.glob('dataFolder/**/**/defect*.dat')
     print("Transfering defect.dat files")
     for dat in allDDat:
-        #print(dat)
         drive,pathAndFile = os.path.splitdrive(dat)
         filePath, file = os.path.split(pathAndFile)
         filePath = os.path.dirname(dat)
         numPath = os.path.dirname(filePath)
         runNum = numPath.split('_')[-1]
         seedNum = filePath.split('-')[-1]
-        #print(seedNum)
         simNum = int(file.split('defect')[-1].split('.dat')[0])
-        #print(simNum)
-        #if simNum>20:
         name = runNum+'_defect'+str(simNum)+'.dat'
         newFilename = os.path.join(outDir,name)
         shutil.copyfile(dat,newFilename)
@@ -59,20 +58,29 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
         newFilename = os.path.join(outDir,name)
         shutil.copyfile(dat,newFilename)
         
+    #Copies over imgGen.py to the output directory
     shutil.copyfile('imgGen.py',os.path.join(outDir,'imgGen.py'))
     sys.path.append(outDir)
     os.chdir(outDir)
+
     from imgGen import imgGenRand
+
     print("Generating Images")
+
+    #Creates defect images from data
     imgGenRand(decrossMin, decrossMax)
     sys.path.append(fileConvertPath)
+
     print("Generating xml files")
     from fileConvertBatch import fileConvertBatch
-    fileConvertBatch(outDir, imageDims, 'custom')
 
+    #Decides the files that will be converted
+    fileConvertBatch(outDir, imageDims, 'custom')
 
     os.chdir(home)
     from markSim import markSim
+
+    #Creates images that are labelled
     print("Generating Simulation Annotated Images")
     markSim(home, runName)
     #print("Generating Noisy Training Images")
