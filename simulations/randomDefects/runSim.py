@@ -10,13 +10,12 @@ import yaml
 # ------------- datAnnotate imports ----------------
 
 import numpy as np
+
 # ------------- create defects imports --------------
 
 import datetime
 import random
 from joblib import Parallel,delayed
-# from randomD import randomD
-
 
 # ------------- RandomD imports --------------
 
@@ -25,6 +24,16 @@ import imageio
 import skimage
 import argparse
 
+# ------------- imgGen imports --------------
+
+# All duplicates
+
+# ------------- markSim imports --------------
+
+import cv2
+import pprint as pp
+from PIL import Image
+import json
 # ------------------------------------------------------------------------------------------
 #                                      Origional RunSim Class         
 # ------------------------------------------------------------------------------------------
@@ -94,11 +103,11 @@ def runSim():
         newFilename = os.path.join(outDir,name)
         shutil.copyfile(dat,newFilename)
         
-    shutil.copyfile('imgGen.py',os.path.join(outDir,'imgGen.py'))
-    sys.path.append(outDir)
-    os.chdir(outDir)
-    from imgGen import imgGenRand
-    print("Generating Images")
+    # shutil.copyfile('imgGen.py',os.path.join(outDir,'imgGen.py'))
+    # sys.path.append(outDir)
+    # os.chdir(outDir)
+    # from imgGen import imgGenRand
+    # print("Generating Images")
     imgGenRand(cfg['simulation']['decrossMin'],cfg['simulation']['decrossMax'])
     sys.path.append(fileConvertPath)
     print("Generating xml files")
@@ -107,15 +116,12 @@ def runSim():
 
 
     os.chdir(mainDir)
-    from markSim import markSim
     print("Generating Simulation Annotated Images")
     markSim()
     #print("Generating Noisy Training Images")
     #addArtifacts()
     print("Done")
 
-if __name__ == '__main__':
-    runSimLocal()
 
 
 # ------------------------------------------------------------------------------------------
@@ -200,41 +206,146 @@ def safeRemake(dir):
 #                                      RandomD Class         
 # ------------------------------------------------------------------------------------------
 
+
 def randomD(decross,dims,nDefects, fileNames):
     xDim = dims[0]
     yDim = dims[1]
     beta = np.pi/2+decross/180*np.pi
 
+    grid = np.reshape(np.zeros(xDim*yDim),(xDim,yDim))
+    dgrid = np.reshape(np.zeros(xDim*yDim),(xDim,yDim))
+    ix,iy = np.indices((xDim,yDim))
 
-def decrossI(beta,image):
+    for i in np.arange(nDefects):
+        dxp = random.randint(0,xDim-1)
+        dyp = random.randint(0,yDim-1)
+
+        dxn = random.randint(0,xDim-1)
+        dyn = random.randint(0,yDim-1)
+
+        grid = dGen(grid,dxp,dyp,1,random.random()*2*np.pi, xDim, yDim)
+        grid = dGen(grid,dxn,dyn,-1,random.random()*2*np.pi, xDim, yDim)
+        dgrid[dxp,dyp] =1
+        dgrid[dxn,dyn] =-1
+        
+    imageio.imwrite(fileNames[2],skimage.img_as_ubyte(decrossI(beta, grid, dims)))
+    np.savetxt(fileNames[0],grid)
+    np.savetxt(fileNames[1],dgrid)
+
+def decrossI(beta,image,dims):
+    xDim = dims[0]
+    yDim = dims[1]
     #beta is the angle between pol and anl (90 for completely crossed)
     temp= ( np.sin(image)*np.cos(image)*np.sin(beta)-np.sin(image)**2*np.cos(beta)-np.cos(beta))**2
     return temp/temp.max()
     
 #nDefects = 20
-grid = np.reshape(np.zeros(xDim*yDim),(xDim,yDim))
-dgrid = np.reshape(np.zeros(xDim*yDim),(xDim,yDim))
-ix,iy = np.indices((xDim,yDim))
 
 def schler(grid):
     return np.sin(2.*grid)**2
-def dGen(grid,x,y,k,off):
+
+def dGen(grid,x,y,k,off,xDim, yDim):
+
+    ix,iy = np.indices((xDim,yDim))
     grid = np.mod(grid+k*np.arctan2(ix-x,iy-y)+off,2*np.pi)
     return grid
 
+# ------------------------------------------------------------------------------------------
+#                                      imgGen Class         
+# ------------------------------------------------------------------------------------------
 
-for i in np.arange(nDefects):
-    dxp = random.randint(0,xDim-1)
-    dyp = random.randint(0,yDim-1)
 
-    dxn = random.randint(0,xDim-1)
-    dyn = random.randint(0,yDim-1)
+def decrossII(beta,image):
+    #beta is the angle between pol and anl (90 for completely crossed)
+    temp= ( np.sin(image)*np.cos(image)*np.sin(beta)-np.sin(image)**2*np.cos(beta)-np.cos(beta))**2
+    return temp/temp.max()
 
-    grid = dGen(grid,dxp,dyp,1,random.random()*2*np.pi)
-    grid = dGen(grid,dxn,dyn,-1,random.random()*2*np.pi)
-    dgrid[dxp,dyp] =1
-    dgrid[dxn,dyn] =-1
-imageio.imwrite(fileNames[2],skimage.img_as_ubyte(decrossI(beta, grid)))
-np.savetxt(fileNames[0],grid)
-np.savetxt(fileNames[1],dgrid)
+def schler(angle):
+    return np.sin(2.*angle)**2.
+def imgGen(decross):
+    beta = (np.pi/2+decross/180*np.pi)
+    names = glob.glob('accumulated/*out*.dat')
+    frames = [decrossII(beta,np.loadtxt(n)) for n in names]
+    
+    names = [n.replace('out', 'defect') for n in names]
+    
+    [imageio.imwrite(n.split('.')[0]+'.jpg',skimage.img_as_ubyte(im)) for n,im in zip(names,frames)]
 
+
+def imgGenRand(decrossMin,decrossMax):
+    decrossMean = (decrossMin+decrossMax)/2
+    decrossDiff = decrossMax-decrossMin
+    
+    names = glob.glob('*out*.dat')
+    decross = np.random.rand(len(names))*decrossDiff+(decrossMean-decrossDiff/2)
+    betas = np.pi/2+decross/180*np.pi
+    frames = [decrossII(beta,np.loadtxt(n)) for (beta,n) in zip(betas,names)]
+    
+    names = [n.replace('out', 'defect') for n in names]
+    
+    [imageio.imwrite(n.split('.')[0]+'.jpg',skimage.img_as_ubyte(im)) for n,im in zip(names,frames)]
+
+
+# ------------------------------------------------------------------------------------------
+#                                      markSim Class         
+# ------------------------------------------------------------------------------------------
+    
+
+def pointing(original_img , predictions):
+    newImage = np.copy(original_img)
+
+    for result in predictions:
+        top_x = result['topleft']['x']
+        top_y = result['topleft']['y']
+
+        btm_x = result['bottomright']['x']
+        btm_y = result['bottomright']['y']
+        
+        x = int((top_x+btm_x)/2)
+        y = int((top_y+btm_y)/2)
+    
+        confidence = result['confidence']
+        label = result['label'] + " " + str(round(confidence, 3))
+        
+        if confidence > 0.3:
+            newImage = cv2.circle(newImage, (x, y), 2, (255,0,0), -1)
+            #newImage = cv2.putText(newImage, label, (top_x, top_y-5), cv2.FONT_HERSHEY_COMPLEX_SMALL , 0.8, (0, 230, 0), 1, cv2.LINE_AA)
+        
+    return newImage
+    
+    
+    
+def markSim():
+    folder = 'accumulated/'
+    simmarkedFolder = 'accumulated/SIMMARKED/'
+    files = glob.glob(folder+'*defect*.dat')
+    
+   
+
+    if not os.path.exists(simmarkedFolder):
+        os.makedirs(simmarkedFolder)
+    
+    #print(len(files))
+    #filename = 'E:\\Projects\\fake\\simulations\\fortran\\LandauGin\\run20190529_131519\\data-k-1.00-beta-10.000-mu-0.000\\defect74.dat'
+    for file in files:
+        fExt = file.split('.')
+        fpath = fExt[:-1]
+        fpathList = fpath[0].split('\\')
+        fpathName = os.path.basename(fpath[0]).split('.')[0]
+        
+        #print(fpath)
+        imgFile = '.'.join(fpath)+'.jpg'
+        outImg = folder+'SIMMARKED/'+fpathName+'SIMMARKED.jpg'
+        data = numpy.loadtxt(file)
+        locs = numpy.where(abs(data)==1)
+        x = locs[0]
+        y = locs[1]
+
+        numDefects = x.shape[0]
+        #print(fpathList)
+        imgcv = cv2.imread(imgFile)
+        for i in range(numDefects):
+            imgcv = cv2.circle(imgcv, (y[i], x[i]), 2, (255,0,0), -1)
+        im = Image.fromarray(imgcv)
+        im.save(outImg)
+            #f.write('{} {} {} {}\r\n'.format(y[i]-3,x[i]-3,y[i]+3,x[i]+3));
