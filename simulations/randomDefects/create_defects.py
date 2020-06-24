@@ -4,6 +4,7 @@ import os
 import datetime
 import shutil
 import random
+import joblib
 from joblib import Parallel,delayed
 
 def create_defects(numImages,dims,numDefects):
@@ -45,7 +46,7 @@ def create_defects(numImages,dims,numDefects):
         defectdat = os.path.join(dataDir2,'defect%d.dat' %(i))
         img = os.path.join(imDir,'image%d.bmp' %(i))
         randomD(decross,dims,defects, [outdat,defectdat,img])
-
+    print(joblib.__version__)
     Parallel(n_jobs=-1)(delayed(process)(i, random.randint(numDefects[0],numDefects[1])) for i in range(0,numImages))
 
     '''
