@@ -1,8 +1,0 @@
-num_images: 10      # number of images to generate
-width: 800          # width and height for image
-height: 800
-max_island: 20      # max number of islands
-max_radius: 100     # max island radius
-max_noise: 0.3      # scales from 0-1, with 0 being black background
-                    # and 1 being uniform noisy background
-
