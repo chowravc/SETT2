@@ -1,0 +1,30 @@
+paths:
+  fileConvert: ../../ImageAnnotation
+  noiseFiles: /noiseFiles
+  simImagesPath: /sim #path to a folder containing simulation images
+simulation:
+  images: 10
+  xDim: 300
+  yDim: 300
+  decrossMax: 65
+  decrossMin: 45
+artifacts: #options for changing how simulation images are enhanced
+  imgMeanMax: 0.7
+  imgMeanMin: 0.3
+  imgStdMax: 24
+  imgStdMin: 1
+  gaussianMin: 0 #in units of sigma
+  gaussianMax: 1.5
+  smartNoise: yes #yes if you wish to add smart noise extracted from real images
+  smartNoiseMin: 0.3
+  smartNoiseMax: 2.5
+  numCircles: 3 #overlays circles of random brightness on images. 0 to not add in circles
+  addGrid: yes #splits images into four random quadrants, which each have their brightness randomly changed
+  gridRange: 0.5 # range over which a quadrant can be brightened or dimmed
+
+
+
+
+
+standard:
+  stds: 6
