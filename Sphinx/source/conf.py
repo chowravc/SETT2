@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Sett Documentation'
+project = 'Sett'
 copyright = '2020, Eric, Ravin'
 author = 'Eric, Ravin'
 

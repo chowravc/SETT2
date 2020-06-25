@@ -34,31 +34,82 @@
             
   <div class="section" id="test-page-for-stuff">
 <h1>Test Page for Stuff<a class="headerlink" href="#test-page-for-stuff" title="Permalink to this headline">¶</a></h1>
-<p># Intro</p>
-<p>This is where an introduction will be given</p>
-<p># List</p>
-<p>Why are you even still reading this ?</p>
-<ul class="simple">
-<li><p>To see how it looks</p></li>
-<li><p>Because you’re procrastinating doing your own work</p></li>
-<li><p>Bdcause your changing this file to actually have documentation in it instead of sarcastic lists</p></li>
-</ul>
-<p># Sample Code</p>
-<p>Code :: Java</p>
-<dl>
-<dt>class Poem{</dt><dd><p>public WordStore storeAdverb;
-public WordStore storeNoun;
-public WordStore storeVerb;
-public WordStore storeAdjective;</p>
+<p>How to Run a Model on Images</p>
+<p>Brief Description of what is going on:</p>
+<blockquote>
+<div><p>You have a bunch of images (<a href="#id1"><span class="problematic" id="id2">*</span></a>.tif files). You also have a pre-trained model with files ForLL.meta and ForLL.pb.</p>
+</div></blockquote>
+<p>(Rough Notes)
+Program expects yolo_custom2.meta and .pb in ‘SETTdarkflowbuilt_graph’. The directory built_graph needs to be created and rename your pretrained model ForLL.meta and .pb to yolo_custom2.* and paste them into that directory.</p>
+<p>In the config meta make everything false other than correct images, runModel and saveRun. Even validate should be false.
+Now run it once . You will get an error message but the root directory containing SETT will have a new directory ‘data’.</p>
+<p>In data, paste all your <a href="#id3"><span class="problematic" id="id4">*</span></a>.tif images into ‘datacollatedannotations’. These should be raw uncorrected images.
+Run the model again.</p>
+<p>‘datacollatedannotationscorrectedoutIMG’ will contain your output images with defect locations and .json files.
+You can now use these .json files to validate data.</p>
+<p>How to Validate Data</p>
 <dl class="simple">
-<dt>public Poem() throws IOException{</dt><dd><p>storeAdverb = new WordStore(“adverbs.txt”);
-storeNoun = new WordStore(“nouns.txt”);
-storeVerb = new VerbStore(“verbs.txt”);
-storeAdjective = new WordStore(“adjectives.txt”);</p>
+<dt>Brief Description of what is going on:</dt><dd><p>You have already finished running the model on some images and get an output of .json files (named <a href="#id5"><span class="problematic" id="id6">*</span></a>.json). Now you want to determine how well the model performed in mAP so you also have labelled .xml files (named <a href="#id7"><span class="problematic" id="id8">*</span></a>.xml).</p>
 </dd>
 </dl>
+<p>Let us start with the following things:
+.json files from detection.
+.xml files from hand labelling.</p>
+<p>Files being used:
+config.yml from ForLL folder
+Put this in the SETT directory
+ForLL.pb and ForLL.meta
+Create directory “bin” in “darkflow”
+Put both of these files in the directory.
+“input” directory from mAP-master
+Copy this directory directly into mAP
+A lot of files from validationData</p>
+<p>Stepwise setup:
+Clone SETT from github
+<a class="reference external" href="https://github.com/mlfilms/SETT">https://github.com/mlfilms/SETT</a>
+Download ForLL folder
+Download validationData folder
+Download mAP:
+<a class="reference external" href="https://github.com/Cartucho/mAP">https://github.com/Cartucho/mAP</a>
+Create a new conda environment. I found it least painful when there are no existing packages in  anaconda or pip.
+Run pip install -r requirements.txt
+Run python setup.py build_ext –inplace
+From ForLL folder, copy config.yml and paste it directly into SETT. Overwrite existing config.yml.
+Go to “meta” in config.yml and edit as follows:
+correctImages: false
+enhanceImages: false
+extractSmartNoise: false
+runModel: false
+runName: ForLL
+runSimulation: false
+saveModel: false
+saveRun: true
+trainModel: false
+validate: true
+Go to “darkflow” in config.yml and edit as follows:
+meta_file: bin/ForLL.meta
+pb_file: bin/ForLL.pb
+Open the directory “darkflow” in SETT. Create a directory “bin”.
+From ForLL folder, copy ForLL.pb and ForLL.meta into “darkflow/bin”.
+Open the directory “mAP” in SETT. Copy directory “input” from the “mAP” download in STEP 4 into mAP in SETT.
+Open validate.py in mAP and edit as follows:
+Change:
+wipeFolder(mAPTruthPath)
+wipeFolder(mAPDetectionPath)
+To:
+flag = input(“Enter ‘yes’ to wipe ground-truth and detection-results”)</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if flag == “yes”:</dt><dd><p>wipeFolder(mAPTruthPath)
+wipeFolder(mAPDetectionPath)</p>
 </dd>
 </dl>
+</div></blockquote>
+<p>From ‘validationData’ downloaded on STEP 3, open ‘validationDataimagescorrectedoutIMG’. Copy all .json files here. Paste them into SETT at ‘SETTmAPinputdetection-results’ after making sure no other files exist.
+From ‘validationData’ downloaded on STEP 3, open ‘validationDataannotationsout’. Copy all .xml files here. Paste them into SETT at ‘SETTmAPinputground-truth’ after making sure no other files exist there.
+Run python overlord.py config.yml
+Python should start validating. Make sure to press enter and not input ‘yes’ when asked.
+Results will be outputted to ‘SETTrunDataForLL’.</p>
 </div>
 
 
