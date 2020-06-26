@@ -23,3 +23,11 @@ def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, 
     runSimulation(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
 
     os.chdir(home)
+
+def extractSmartNoise():
+
+    print("Extracting Smart Noise")
+
+    path = cfg['paths']['noiseExtractor']
+    noiseExtraction = imp.load_source('packages', os.path.join(path,'noiseExtractor.py'))
+    noiseExtraction.noiseExtractor(cfg)
