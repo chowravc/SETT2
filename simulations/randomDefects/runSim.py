@@ -120,7 +120,7 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
     print("Generating xml files")
 
     #Decides the files that will be converted
-    fileConvertBatch(outDir, imageDims, 'custom')
+    fileConvertBatch(outDir, imageDims, 'txt')
 
     os.chdir(mainDir)
 
