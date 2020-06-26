@@ -28,7 +28,7 @@ if not os.path.exists('im'):
 dataPath = os.getcwd() + "/data"
 imPath = os.getcwd() +  "/im"
 
-for x in range(10):
+for x in range(100):
 	parser = argparse.ArgumentParser()
 	parser.add_argument('decross',nargs='?',help='delta angle of the decrossed polarizers',type = float,default = 0)
 	parser.add_argument('dims',nargs='?',help='simulation dimensions [x,y]',type = float,default = [100,100])
