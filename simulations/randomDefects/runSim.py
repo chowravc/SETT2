@@ -120,7 +120,7 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
     print("Generating xml files")
 
     #Decides the files that will be converted
-    fileConvertBatch(outDir, imageDims, 'custom')
+    fileConvertBatch(outDir, imageDims, 'txt')
 
     os.chdir(mainDir)
 
@@ -325,8 +325,8 @@ def pointing(original_img , predictions):
     
 def markSim(home, runName):
     reset = os.getcwd()
-    os.chdir(home + runName)
-    simmarkedFolder = home + runName + '/SIMMARKED/'
+    os.chdir(home + "\\" + runName)
+    simmarkedFolder = home + "\\" + runName + '/SIMMARKED/'
     files = glob.glob('*defect*.dat')
     if not os.path.exists(simmarkedFolder):
         os.makedirs(simmarkedFolder)
