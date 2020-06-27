@@ -3,6 +3,33 @@ import sys
 import imp
 
 def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax):
+    """Create images of a simulated liquid crystal films with defects.
+    Creates *out*.dat files storing spins of individual molecules, *defect*.dat with defect locations marked.
+    Also creates .jpg files containing the schlieren texture, the same images with annotated defect locaions and
+    .xml files with defect locations to be used by YOLO.
+
+    Parameters
+    ----------
+    runName : (str) the name of the directory the output of this function will be stored in. If it already exists, nothing will be overwritten.
+    numImages : (int) number of images the function should create.
+    imageDims : (list) dimensions of the images to be simulated. [x, y]
+    maxDefects : (int) maximum number of defects an image can have.
+    minDefects : (int) minimum number of defects an image can have.
+    decrossMin : (int) minimum "Hourglass-ness" of a defect. UPDATE
+    decrossMax : (int) maximum "Hourglass-ness" of a defect. UPDATE
+
+    Returns
+    -------
+    None
+
+    Notes
+    -----
+
+
+    See also
+    --------
+    
+    """
 
     simString = 'simulations/randomDefects/runSim.py'
     functionName = 'runSim'
