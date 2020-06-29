@@ -120,7 +120,7 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
     print("Generating xml files")
 
     #Decides the files that will be converted
-    fileConvertBatch(outDir, imageDims, 'txt')
+    fileConvertBatch(outDir, imageDims, 'custom')
 
     os.chdir(mainDir)
 
@@ -190,8 +190,8 @@ def create_defects(numImages,dims,numDefects):
     safeMake(dataDir2)
     safeMake(imDir)
     shutil.copyfile('randomD.py',os.path.join(runDir,'randomD.py'))
-    sys.path.append(runDir)
     import randomD as rD
+    sys.path.append(runDir)
     os.chdir(runDir)
 
     def process(i,defects):
@@ -215,7 +215,7 @@ def safeRemake(dir):
 #                                      RandomD Class         
 # ------------------------------------------------------------------------------------------
 
-
+'''
 def randomD(decross,dims,nDefects, fileNames):
     xDim = dims[0]
     yDim = dims[1]
@@ -245,7 +245,7 @@ def decrossI(beta,image,dims):
     xDim = dims[0]
     yDim = dims[1]
     #beta is the angle between pol and anl (90 for completely crossed)
-    temp= ( np.sin(image)*np.cos(image)*np.sin(beta)-np.sin(image)**2*np.cos(beta)-np.cos(beta))**2
+    temp= (np.sin(image)*np.cos(image)*np.sin(beta)-np.sin(image)**2*np.cos(beta)-np.cos(beta))**2
     return temp/temp.max()
     
 #nDefects = 20
@@ -258,7 +258,7 @@ def dGen(grid,x,y,k,off,xDim, yDim):
     ix,iy = np.indices((xDim,yDim))
     grid = np.mod(grid+k*np.arctan2(ix-x,iy-y)+off,2*np.pi)
     return grid
-
+'''
 # ------------------------------------------------------------------------------------------
 #                                      imgGen Class         
 # ------------------------------------------------------------------------------------------
@@ -326,8 +326,8 @@ def pointing(original_img , predictions):
     
 def markSim(home, runName):
     reset = os.getcwd()
-    os.chdir(home + "\\" + runName)
-    simmarkedFolder = home + "\\" + runName + '/SIMMARKED/'
+    os.chdir(home + runName)
+    simmarkedFolder = home + runName + '/SIMMARKED/'
     files = glob.glob('*defect*.dat')
     if not os.path.exists(simmarkedFolder):
         os.makedirs(simmarkedFolder)
