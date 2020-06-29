@@ -189,17 +189,18 @@ def create_defects(numImages,dims,numDefects):
     imDir = os.path.join(runDir,'im')
     safeMake(dataDir2)
     safeMake(imDir)
-    #shutil.copyfile('randomD.py',os.path.join(runDir,'randomD.py'))
+    shutil.copyfile('randomD.py',os.path.join(runDir,'randomD.py'))
     sys.path.append(runDir)
+    import randomD as rD
     os.chdir(runDir)
 
     def process(i,defects):
         outdat = os.path.join(dataDir2,'out%d.dat' %(i))
         defectdat = os.path.join(dataDir2,'defect%d.dat' %(i))
         img = os.path.join(imDir,'image%d.bmp' %(i))
-        randomD(decross,dims,defects, [outdat,defectdat,img])
+        rD.randomD(decross,dims,defects, [outdat,defectdat,img])
 
-    Parallel(n_jobs=1)(delayed(process)(i, random.randint(numDefects[0],numDefects[1])) for i in range(0,numImages))
+    Parallel(n_jobs=-1)(delayed(process)(i, random.randint(numDefects[0],numDefects[1])) for i in range(0,numImages))
 
     os.chdir(baseDir)
 
