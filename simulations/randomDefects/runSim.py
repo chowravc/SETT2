@@ -15,8 +15,6 @@ import numpy as np
 
 import datetime
 import random
-import joblib
-print(joblib.__version__)
 from joblib import Parallel, delayed
 
 # ------------- RandomD imports --------------
