@@ -87,3 +87,37 @@ def extractSmartNoise(crop, cropManual, cropX, cropY):
     
     # Calling function noiseExtractor.
     noiseExtraction.noiseExtractor(home, noiseSamplePath, crop, cropManual, cropX, cropY)
+
+def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise, numCircles, addGrid, gridRange, stds):
+	"""Enchance simulation images with various types of noise (including smart noise), bright circles, grids and standardisation to be used for training
+
+    Args:
+        runName (str): decides the simulation run that will have its images enchanced
+        imgMean (list): choose the mean intensity an image can have; a list of two floats [x, y] with x lesser than or equal to y and both lesser than 1
+        imgStd (list): choose the range of intensity ranges an image can have; a list of two floats [x, y] with x lesser than or equal to y and both strictly greater than 0
+        gaussian (list): range of gaussian in units of sigma; a list of two floats [x, y] with x lesser than y
+        doSmartNoise (bool): choose whether or not to add smart noise to simulated images
+        smartNoise (list): range of intensity of smart noise; a list of two floats [x, y] with x lesser than or equal to y
+        numCircles (int): choose how many bright circles to add to the simulated images; 0 to not add any
+        addGrid (bool): splits the image into four random quadrants with random intensities
+        gridRange (float): range over which quadrants can be brightened or dimmed
+        stds (int): choose the intensity range an image can have
+
+    Writes:
+        *_defect*.jpg: enchanced simulation image files written to ../sett2/<runName>/enchanced
+
+    Note:
+        To run this with smartNoise, first extractSmartNoise() needs to be run and noise files must be generated
+
+    """
+	print("Enhancing Simulation Images")
+
+	home = os.getcwd() + '/defectSimulation/'
+
+	path = home + "/artifacts/"
+
+	smartNoisePath = "smartNoise/noiseSamples/noiseFiles"
+
+	artifacts = imp.load_source('packages', os.path.join(path,'addArtifacts.py'))
+
+	artifacts.addArtifacts(home, runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoisePath, smartNoise, numCircles, addGrid, gridRange, stds)
