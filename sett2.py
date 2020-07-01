@@ -53,6 +53,7 @@ def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, 
     # Changing directory back to home.
     os.chdir(home)
 
+
 def extractSmartNoise(crop, cropManual, cropX, cropY):
     """Extract noise .jpg files from experimental images as .bmp files
 
@@ -72,21 +73,26 @@ def extractSmartNoise(crop, cropManual, cropX, cropY):
 
     """
 
-    path = "/smartNoise/" # Path containing the noiseExtractor module.
+    # Path containing the noiseExtractor module in sett2.
+    path = "/smartNoise/"
 
-    noiseSamplePath = "/smartNoise/noiseSamples/" # Path containing .bmp experimental images.
-    
-    home = os.getcwd() + '/defectSimulation/' # Home directory of sett2.
+    # Path containing .bmp experimental images.
+    noiseSamplePath = "/smartNoise/noiseSamples/"
+
+    # Home directory of sett2.
+    home = os.getcwd() + '/defectSimulation/'
 
     print("Extracting Smart Noise")
-    
-    functionPath = home + path # Path of noiseExtractor function.
+
+    # Path of noiseExtractor function.
+    functionPath = home + path
     
     # Importing the module noiseExtractor.
     noiseExtraction = imp.load_source('packages', os.path.join(functionPath,'noiseExtractor.py'))
     
     # Calling function noiseExtractor.
     noiseExtraction.noiseExtractor(home, noiseSamplePath, crop, cropManual, cropX, cropY)
+
 
 def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise, numCircles, addGrid, gridRange, stds):
 	"""Enchance simulation images with various types of noise (including smart noise), bright circles, grids and standardisation to be used for training
@@ -112,12 +118,17 @@ def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise,
     """
 	print("Enhancing Simulation Images")
 
+	# Home directory of sett2.
 	home = os.getcwd() + '/defectSimulation/'
 
+	# Path to addArtifacts.py
 	path = home + "/artifacts/"
 
+	# Path to smart noise image files.
 	smartNoisePath = "smartNoise/noiseSamples/noiseFiles"
 
+	# Loading addArtifacts.py.
 	artifacts = imp.load_source('packages', os.path.join(path,'addArtifacts.py'))
 
+	# Calling function addArtifacts.
 	artifacts.addArtifacts(home, runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoisePath, smartNoise, numCircles, addGrid, gridRange, stds)
