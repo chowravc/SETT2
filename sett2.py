@@ -132,3 +132,38 @@ def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise,
 
 	# Calling function addArtifacts.
 	artifacts.addArtifacts(home, runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoisePath, smartNoise, numCircles, addGrid, gridRange, stds)
+
+
+def correctImages(imgExt, selectBox, autoBox, crop, stds):
+	"""Enchance data images with various types of noise (including smart noise) and standardisation to prepare them for running model
+
+    Args:
+        imgExt (str): extension of images to be corrected
+        selectBox (bool): selects a box to base correction on
+        autoBox (bool): uses crop to automatically box part of image
+        crop (list): [[x1, x2], [y1, y2]] selects x and y crop limits for autoBox
+        stds (float): decides dynamic range of the image
+
+    Writes:
+        *.<ext>: corrected data image files written to <base>/data/collated/annotations/corrected where base is the directory containing sett2
+
+    Note:
+        First run this function to generate the directory structure to place images into
+
+    """
+	print("Correcting Images")
+
+	# Home directory of sett2.
+	home = os.getcwd() + '/defectSimulation/'
+
+	# Path to smart noise.
+	path = home + "/smartNoise/"
+
+	# Default data image folder.
+	imgFolder = "../data/collated/annotations"
+
+	# Loading correctImages.py.
+	correct = imp.load_source('packages', os.path.join(path,'correctImages.py'))
+
+	# Calling function correctImages.
+	correct.correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds)
