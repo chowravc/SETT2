@@ -1,0 +1,7 @@
+Test for Sett module
+====================
+
+.. automodule:: Test for Sett
+   :members:
+   :undoc-members:
+   :show-inheritance:
