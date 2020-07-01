@@ -112,22 +112,19 @@ def noiseExtractorLocal():
         cfg = yaml.safe_load(ymlfile)
 
 
-def noiseExtractor(cfg):
-    filepath = os.path.join(cfg['temp']['rootDir'],cfg['paths']['noiseSamples'])
-    doCrop = cfg['smartNoise']['crop']
+def noiseExtractor(home, noiseSamplePath, crop, cropManual, cropX, cropY):
+    filepath = home + noiseSamplePath
+    doCrop = crop
     paths = glob.glob(filepath+'/*.bmp')
 
-    #(vfilepath,vfilename)=os.path.split(args.videofilenamepath)
     iterator = 1
-    #print(paths)
     for path in paths:     
         image = skimage.img_as_float(plt.imread(path))
         dims = image.shape
         if doCrop:
-            if cfg['smartNoise']['cropManual']:
+            if cropManual:
                 if iterator == 1:
                     
-                    #fig.canvas.mpl_connect('button_press_event',onclick)
                     fig,ax = plt.subplots()
                     imgplot = ax.imshow(image)
                     getter1 = getter(ax,fig)
@@ -138,8 +135,6 @@ def noiseExtractor(cfg):
 
                     x.sort()
                     y.sort()
-
-
 
                     for i in range(0,len(x)):
                         x[i] = int(x[i])
@@ -155,8 +150,8 @@ def noiseExtractor(cfg):
                     x[1] = x[0] +minLen
                     y[1] = y[0] +minLen
             else:
-                x = cfg['smartNoise']['cropX']
-                y = cfg['smartNoise']['cropY']
+                x = cropX
+                y = cropY
                 
         else:
             
@@ -165,103 +160,20 @@ def noiseExtractor(cfg):
         if len(dims)>2:
             image = rgb2gray(image)
         croppedImg = image[y[0]:y[1],x[0]:x[1]]
-        #image = standardize(croppedImg)
         image = croppedImg
-        #plt.imshow(image)
-        #plt.show()
 
-
-
-        #print(image)
         noise = extractNoise(image,100)
         noise = standardize(noise)
+
         #create noise template
         h,w = noise.shape
         im = Image.fromarray(noise*255)
-        #plt.imshow(im)
-        #plt.show()
+
         outFolder = filepath+'/noiseFiles/'
         if not os.path.exists(outFolder):
             os.makedirs(outFolder)
         
         #print(outFolder+'noise'+str(iterator)+'.jpg')
-
-        if im.mode != 'RGB':
-            im = im.convert('RGB')
-        im.save(outFolder+'noise'+str(iterator)+'.jpg')
-        iterator = iterator+1
-        #plt.imshow(im)
-        #plt.show()
-
-
-if __name__  == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("filepath",nargs='?',type = str, default='noiseSamples', help='name of the folder to extract noise from')
-    parser.add_argument("setbox",nargs='?',type =str, default="y", help="y to manually set crop size")
-    args= parser.parse_args()
-
-    filepath = args.filepath
-    doCrop = args.setbox
-    paths = glob.glob(filepath+'/*.bmp')
-
-    #(vfilepath,vfilename)=os.path.split(args.videofilenamepath)
-    iterator = 1
-    print(paths)
-    for path in paths:
-
-        
-        image = skimage.img_as_float(plt.imread(path))
-        dims = image.shape
-        if doCrop == "y":
-            if iterator == 1:
-                
-                #fig.canvas.mpl_connect('button_press_event',onclick)
-                fig,ax = plt.subplots()
-                imgplot = ax.imshow(image)
-                getter1 = getter(ax,fig)
-                plt.show()
-
-                x = getter1.x
-                y = getter1.y
-
-                x.sort()
-                y.sort()
-
-
-
-                for i in range(0,len(x)):
-                    x[i] = int(x[i])
-
-                for i in range(0,len(y)):
-                    y[i] = int(y[i])
-                first = 0
-        else:
-            
-            x = [0,dims[0]]
-            y = [0,dims[1]]
-        if len(dims)>2:
-            image = rgb2gray(image)
-        croppedImg = image[y[0]:y[1],x[0]:x[1]]
-        #image = standardize(croppedImg)
-        image = croppedImg
-        #plt.imshow(image)
-        #plt.show()
-
-
-
-        #print(image)
-        noise = extractNoise(image,100)
-        noise = standardize(noise)
-        #create noise template
-        h,w = noise.shape
-        im = Image.fromarray(noise*255)
-        #plt.imshow(im)
-        #plt.show()
-        outFolder = filepath+'/noiseFiles/'
-        if not os.path.exists(outFolder):
-            os.makedirs(outFolder)
-        
-        print(outFolder+'noise'+str(iterator)+'.jpg')
 
         if im.mode != 'RGB':
             im = im.convert('RGB')

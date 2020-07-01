@@ -86,31 +86,26 @@ class getter:
                 self.ax.add_patch(self.rect)
                 self.fig.canvas.draw()
 
-def correctImagesCFG(cfg):
-    targetDir = os.path.join(cfg['temp']['rootDir'],cfg['imageCorrection']['imgFolder'])
-    ext = cfg['imageCorrection']['imgExt']
+def correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds):
+    targetDir = os.path.join(home, imgFolder)
     outDir = os.path.join(targetDir,"corrected")
     fullImg = 1
     
     if not os.path.exists(outDir):
         os.makedirs(outDir)
 
-    filePattern = 	os.path.join(targetDir,"*." + ext)
+    filePattern = 	os.path.join(targetDir,"*." + imgExt)
     first = 1  
     print(filePattern)
     for filename in glob.glob(filePattern):
         
         images = ImageSequence(filename)
         imgcv = images[0]
-        #print(imgcv.dtype)
-        
-        #sections = filename.split("\\")
-        #imName = sections[-1]
         imName = os.path.basename(filename)
 
         prePost = imName.split(".")
         noEnd = prePost[0]
-        if cfg['imageCorrection']['selectBox']:
+        if selectBox:
             if first == 1:
                 fig,ax = plt.subplots()
                 imgplot = ax.imshow(imgcv)
@@ -124,25 +119,22 @@ def correctImagesCFG(cfg):
                 x.sort()
                 y.sort()
 
-
-
                 for i in range(0,len(x)):
                     x[i] = int(x[i])
 
                 for i in range(0,len(y)):
                     y[i] = int(y[i])
                 first = 0
-        elif cfg['imageCorrection']['autoBox']:
-            x = cfg['imageCorrection']['cropX']
-            y = cfg['imageCorrection']['cropY']
+
+        elif autoBox:
+            x = crop[0]
+            y = crop[1]
         else:
             dims = imgcv.shape
             x = [0,dims[0]]
             y = [0,dims[1]]
-
-
+            
         croppedImg = imgcv[y[0]:y[1],x[0]:x[1]]
-        stds = cfg['standard']['stds']
         outImg = standardizeCropped(imgcv,croppedImg,stds)
         outImg = outImg*256
         outImg = outImg.astype(np.uint8)
