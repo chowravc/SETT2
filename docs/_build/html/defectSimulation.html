@@ -170,79 +170,115 @@
 <dt id="defectSimulation.sett2.correctImages">
 <code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">correctImages</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">imgExt</span></em>, <em class="sig-param"><span class="n">selectBox</span></em>, <em class="sig-param"><span class="n">autoBox</span></em>, <em class="sig-param"><span class="n">crop</span></em>, <em class="sig-param"><span class="n">stds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.correctImages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enchance data images with various types of noise (including smart noise) and standardisation to prepare them for running model</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>imgExt (str): extension of images to be corrected
-selectBox (bool): selects a box to base correction on
-autoBox (bool): uses crop to automatically box part of image
-crop (list): [[x1, x2], [y1, y2]] selects x and y crop limits for autoBox
-stds (float): decides dynamic range of the image</p>
-</dd>
-<dt>Writes:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">*</span></a>.&lt;ext&gt;: corrected data image files written to &lt;base&gt;/data/collated/annotations/corrected where base is the directory containing sett2</p>
-</dd>
-<dt>Note:</dt><dd><p>First run this function to generate the directory structure to place images into</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imgExt</strong> (<em>str</em>) – extension of images to be corrected</p></li>
+<li><p><strong>selectBox</strong> (<em>bool</em>) – selects a box to base correction on</p></li>
+<li><p><strong>autoBox</strong> (<em>bool</em>) – uses crop to automatically box part of image</p></li>
+<li><p><strong>crop</strong> (<em>list</em>) – [[x1, x2], [y1, y2]] selects x and y crop limits for autoBox</p></li>
+<li><p><strong>stds</strong> (<em>float</em>) – decides dynamic range of the image</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">*</span></a>.&lt;ext&gt;: corrected data image files written to &lt;base&gt;/data/collated/annotations/corrected where base is the directory containing sett2</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>First run this function to generate the directory structure to place images into</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="defectSimulation.sett2.enchanceImages">
 <code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">enchanceImages</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">runName</span></em>, <em class="sig-param"><span class="n">imgMean</span></em>, <em class="sig-param"><span class="n">imgStd</span></em>, <em class="sig-param"><span class="n">gaussian</span></em>, <em class="sig-param"><span class="n">doSmartNoise</span></em>, <em class="sig-param"><span class="n">smartNoise</span></em>, <em class="sig-param"><span class="n">numCircles</span></em>, <em class="sig-param"><span class="n">addGrid</span></em>, <em class="sig-param"><span class="n">gridRange</span></em>, <em class="sig-param"><span class="n">stds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.enchanceImages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enchance simulation images with various types of noise (including smart noise), bright circles, grids and standardisation to be used for training</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>runName (str): decides the simulation run that will have its images enchanced
-imgMean (list): choose the mean intensity an image can have; a list of two floats [x, y] with x lesser than or equal to y and both lesser than 1
-imgStd (list): choose the range of intensity ranges an image can have; a list of two floats [x, y] with x lesser than or equal to y and both strictly greater than 0
-gaussian (list): range of gaussian in units of sigma; a list of two floats [x, y] with x lesser than y
-doSmartNoise (bool): choose whether or not to add smart noise to simulated images
-smartNoise (list): range of intensity of smart noise; a list of two floats [x, y] with x lesser than or equal to y
-numCircles (int): choose how many bright circles to add to the simulated images; 0 to not add any
-addGrid (bool): splits the image into four random quadrants with random intensities
-gridRange (float): range over which quadrants can be brightened or dimmed
-stds (int): choose the intensity range an image can have</p>
-</dd>
-<dt>Writes:</dt><dd><p><em>_defect</em>.jpg: enchanced simulation image files written to ../sett2/&lt;runName&gt;/enchanced</p>
-</dd>
-<dt>Note:</dt><dd><p>To run this with smartNoise, first extractSmartNoise() needs to be run and noise files must be generated</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runName</strong> (<em>str</em>) – decides the simulation run that will have its images enchanced</p></li>
+<li><p><strong>imgMean</strong> (<em>list</em>) – choose the mean intensity an image can have; a list of two floats [x, y] with x lesser than or equal to y and both lesser than 1</p></li>
+<li><p><strong>imgStd</strong> (<em>list</em>) – choose the range of intensity ranges an image can have; a list of two floats [x, y] with x lesser than or equal to y and both strictly greater than 0</p></li>
+<li><p><strong>gaussian</strong> (<em>list</em>) – range of gaussian in units of sigma; a list of two floats [x, y] with x lesser than y</p></li>
+<li><p><strong>doSmartNoise</strong> (<em>bool</em>) – choose whether or not to add smart noise to simulated images</p></li>
+<li><p><strong>smartNoise</strong> (<em>list</em>) – range of intensity of smart noise; a list of two floats [x, y] with x lesser than or equal to y</p></li>
+<li><p><strong>numCircles</strong> (<em>int</em>) – choose how many bright circles to add to the simulated images; 0 to not add any</p></li>
+<li><p><strong>addGrid</strong> (<em>bool</em>) – splits the image into four random quadrants with random intensities</p></li>
+<li><p><strong>gridRange</strong> (<em>float</em>) – range over which quadrants can be brightened or dimmed</p></li>
+<li><p><strong>stds</strong> (<em>int</em>) – choose the intensity range an image can have</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><em>_defect</em>.jpg: enchanced simulation image files written to ../sett2/&lt;runName&gt;/enchanced</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To run this with smartNoise, first extractSmartNoise() needs to be run and noise files must be generated</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="defectSimulation.sett2.extractSmartNoise">
 <code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">extractSmartNoise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">crop</span></em>, <em class="sig-param"><span class="n">cropManual</span></em>, <em class="sig-param"><span class="n">cropX</span></em>, <em class="sig-param"><span class="n">cropY</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.extractSmartNoise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract noise .jpg files from experimental images as .bmp files</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>crop (bool): Decide whether the experimental images should be cropped before extracting noise
-cropManual (bool): Decide whether all images should be cropped manually with individual limits
-cropX (int): crop width used when cropManual is False
-cropY (int): crop height used when cropManual is False</p>
-</dd>
-<dt>Writes:</dt><dd><p>noise*.jpg: Noise image files written to ../sett2/smartNoise/noiseSamples/noiseFiles</p>
-</dd>
-<dt>Note:</dt><dd><p>Input .bmp experimental images in the folder ..sett2/smartNoise/noiseSamples and decide 
-the region being used with cropping parameters. Noise will be extracted and images will be created 
-at ../sett2/smartNoise/noiseSamples/noiseFiles as .jpg files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crop</strong> (<em>bool</em>) – Decide whether the experimental images should be cropped before extracting noise</p></li>
+<li><p><strong>cropManual</strong> (<em>bool</em>) – Decide whether all images should be cropped manually with individual limits</p></li>
+<li><p><strong>cropX</strong> (<em>int</em>) – crop width used when cropManual is False</p></li>
+<li><p><strong>cropY</strong> (<em>int</em>) – crop height used when cropManual is False</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p>noise*.jpg: Noise image files written to ../sett2/smartNoise/noiseSamples/noiseFiles</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Input .bmp experimental images in the folder ..sett2/smartNoise/noiseSamples and decide
+the region being used with cropping parameters. Noise will be extracted and images will be created
+at ../sett2/smartNoise/noiseSamples/noiseFiles as .jpg files.</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="defectSimulation.sett2.simulate">
 <code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">runName</span></em>, <em class="sig-param"><span class="n">numImages</span></em>, <em class="sig-param"><span class="n">imageDims</span></em>, <em class="sig-param"><span class="n">maxDefects</span></em>, <em class="sig-param"><span class="n">minDefects</span></em>, <em class="sig-param"><span class="n">decrossMin</span></em>, <em class="sig-param"><span class="n">decrossMax</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.simulate" title="Permalink to this definition">¶</a></dt>
-<dd><p>This runs a simulation to generate trianing data based on the parameters passed</p>
+<dd><p>Generate images and data of simulated smectic films with defects for training</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>runName</strong> (<em>str</em><em>, </em><em>unless told otherwise in the form of 'run DD/MM/YY/hh/mm/ss'</em>) – Used as the folder name for saving generated images</p></li>
-<li><p><strong>numImages</strong> (<em>int</em><em>, </em><em>optional</em>) – the number of images to generate</p></li>
-<li><p><strong>imageDims</strong> (<em>int pairs</em><em>, </em><em>optional</em>) – dimensions of images to create</p></li>
-<li><p><strong>maxDefects</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum amount of defects a generated image can have</p></li>
-<li><p><strong>minDefects</strong> (<em>int</em><em>, </em><em>optional</em>) – The minimum amount of defects that can be present in a generated image</p></li>
-<li><p><strong>decrossMin</strong> (<em>float</em><em>, </em><em>optional</em>) – An unused prameter for something - will add use later - ADAM LOOK HERE</p></li>
-<li><p><strong>decrossMax</strong> (<em>float</em><em>, </em><em>optional</em>) – An unused prameter for something - will add use later - ADAM LOOK HERE</p></li>
+<li><p><strong>runName</strong> (<em>str</em><em>, </em><em>unless told otherwise as 'run DD/MM/YY/hh/mm/ss'</em>) – the name of the directory the output of this function will be stored in. If it already exists, nothing will be overwritten</p></li>
+<li><p><strong>numImages</strong> (<em>int</em><em>, </em><em>optional</em>) – number of images the function should create</p></li>
+<li><p><strong>imageDims</strong> (<em>list</em><em>, </em><em>optional</em>) – dimensions of the images to be simulated as [x, y] where both are int</p></li>
+<li><p><strong>maxDefects</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum number of defects an image can have</p></li>
+<li><p><strong>minDefects</strong> (<em>int</em><em>, </em><em>optional</em>) – minimum number of defects an image can have</p></li>
+<li><p><strong>decrossMin</strong> (<em>float</em><em>, </em><em>optional</em>) – minimum “Hourglass-ness” of a defect ADAM LOOK HERE</p></li>
+<li><p><strong>decrossMax</strong> (<em>float</em><em>, </em><em>optional</em>) – maximum “Hourglass-ness” of a defect ADAM LOOK HERE</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><em>_defect</em>.dat: Writes defect location data files to ../sett2/&lt;runName&gt;
+<em>_out</em>.dat: Writes spin data files to ../sett2/&lt;runName&gt;
+<em>_defect</em>.jpg: Writes images of the schlieren texture to ../sett2/&lt;runName&gt;
+<em>_defect</em>.txt: <em>defect</em>.dat converted to txt written to ../sett2/&lt;runName&gt;
+<em>_defect*SIMMARKED.jpg: Writes images of schlieren texture with annotated defects to ../sett2/&lt;runName&gt;/SIMMARKED
+*_defect</em>.xml: Writes defect bounding boxes in .xml format for YOLO training to ../sett2/&lt;runName&gt;/out</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Creates <em>out</em>.dat files storing spins of individual molecules, <em>defect</em>.dat with defect locations marked.
+Also creates .jpg files containing the schlieren texture, the same images with annotated defect locaions and
+.xml files with defect locations to be used by YOLO.</p>
+</div>
 </dd></dl>
 
 </div>

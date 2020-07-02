@@ -95,8 +95,7 @@ def correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds):
         os.makedirs(outDir)
 
     filePattern = 	os.path.join(targetDir,"*." + imgExt)
-    first = 1  
-    print(filePattern)
+    first = 1
     for filename in glob.glob(filePattern):
         
         images = ImageSequence(filename)
