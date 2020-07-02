@@ -5,45 +5,30 @@ import imp
 
 
 def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax):
-    """This runs a simulation to generate trianing data based on the parameters passed
+    """Generate images and data of simulated smectic films with defects for training
 
-        :param runName: Used as the folder name for saving generated images
-        :type runName: str, unless told otherwise in the form of 'run DD/MM/YY/hh/mm/ss'
-        :param numImages: the number of images to generate
-        :type numImages: int, optional
-        :param imageDims: dimensions of images to create 
-        :type imageDims: int pairs, optional
-        :param maxDefects: The maximum amount of defects a generated image can have
-        :type maxDefects: int, optional
-        :param minDefects: The minimum amount of defects that can be present in a generated image
-        :type minDefects: int, optional
-        :param decrossMin: An unused prameter for something - will add use later - ADAM LOOK HERE
-        :type decrossMin: float, optional
-        :param decrossMax: An unused prameter for something - will add use later - ADAM LOOK HERE
-        :type decrossMax: float, optional
+    Args:
+        runName (str, unless told otherwise as 'run DD/MM/YY/hh/mm/ss'): the name of the directory the output of this function will be stored in. If it already exists, nothing will be overwritten
+        numImages (int, optional): number of images the function should create
+        imageDims (list, optional): dimensions of the images to be simulated as [x, y] where both are int
+        maxDefects (int, optional): maximum number of defects an image can have
+        minDefects (int, optional): minimum number of defects an image can have
+        decrossMin (float, optional): minimum "Hourglass-ness" of a defect ADAM LOOK HERE
+        decrossMax (float, optional): maximum "Hourglass-ness" of a defect ADAM LOOK HERE
+
+    Writes:
+        *_defect*.dat: Writes defect location data files to ../sett2/<runName>
+        *_out*.dat: Writes spin data files to ../sett2/<runName>
+        *_defect*.jpg: Writes images of the schlieren texture to ../sett2/<runName>
+        *_defect*.txt: *defect*.dat converted to txt written to ../sett2/<runName>
+        *_defect*SIMMARKED.jpg: Writes images of schlieren texture with annotated defects to ../sett2/<runName>/SIMMARKED
+        *_defect*.xml: Writes defect bounding boxes in .xml format for YOLO training to ../sett2/<runName>/out
+
+    Note:
+        Creates *out*.dat files storing spins of individual molecules, *defect*.dat with defect locations marked.
+        Also creates .jpg files containing the schlieren texture, the same images with annotated defect locaions and
+        .xml files with defect locations to be used by YOLO.
     """
-
-    # Args:
-    #     runName (str): the name of the directory the output of this function will be stored in. If it already exists, nothing will be overwritten
-    #     numImages (int): number of images the function should create
-    #     imageDims (list): dimensions of the images to be simulated as [x, y]
-    #     maxDefects (int): maximum number of defects an image can have
-    #     minDefects (int): minimum number of defects an image can have
-    #     decrossMin (int): minimum "Hourglass-ness" of a defect UPDATE
-    #     decrossMax (int): maximum "Hourglass-ness" of a defect UPDATE
-
-    # Writes:
-    #     *_defect*.dat: Writes defect location data files to ../sett2/<runName>
-    #     *_out*.dat: Writes spin data files to ../sett2/<runName>
-    #     *_defect*.jpg: Writes images of the schlieren texture to ../sett2/<runName>
-    #     *_defect*.txt: *defect*.dat converted to txt written to ../sett2/<runName>
-    #     *_defect*SIMMARKED.jpg: Writes images of schlieren texture with annotated defects to ../sett2/<runName>/SIMMARKED
-    #     *_defect*.xml: Writes defect bounding boxes in .xml format for YOLO training to ../sett2/<runName>/out
-
-    # Note:
-    #     Creates *out*.dat files storing spins of individual molecules, *defect*.dat with defect locations marked.
-    #     Also creates .jpg files containing the schlieren texture, the same images with annotated defect locaions and
-    #     .xml files with defect locations to be used by YOLO.
 
     simString = 'simulations/randomDefects/runSim.py' # Path containing the runSim module.
     functionName = 'runSim' # Name of function being instantiated in runSim.
