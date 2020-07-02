@@ -1,7 +1,7 @@
 import os
 import sys
 import imp
-
+import shutil
 
 
 def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax):
@@ -167,3 +167,50 @@ def correctImages(imgExt, selectBox, autoBox, crop, stds):
 
 	# Calling function correctImages.
 	correct.correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds)
+
+def validate(saveRun, runName):
+    """Validate model on a dataset through mAP
+
+    Args:
+        saveRun (bool): choose whether or not to save the results to directory of runName
+        runName (str): directory of run where results of validation will be saved
+
+    Writes:
+        validationResults: validation data files written to ../sett2/<runName>/ where base is the directory containing sett2
+
+    Note:
+        First put .xml files with actual defect locations to ../sett2/mAP/input/ground-truth/ and .json files (results from running model) to ../sett2/mAP/input/detection-results/
+
+    """
+    print("Validating")
+
+    # Home directory of sett2.
+    home = os.getcwd() + '/defectSimulation/'
+
+    #mAP path
+    mAP = "mAP"
+
+    # Path to validation
+    path = home + mAP
+
+    # Paths UPDATE
+    validationTruthPath = "../data/collated/annotations/csv/out"
+    validationDetectionPath = "../data/collated/annotations/corrected/outIMG"
+
+    # Loading validate.py.
+    artifacts = imp.load_source('packages', os.path.join(path,'validate.py'))
+
+    # Calling function validateRun.
+    artifacts.validateRun(home, mAP, validationTruthPath, validationDetectionPath)
+
+    # Changing directory
+    os.chdir(home)
+
+    if saveRun:
+
+        if not os.path.exists(home + runName):
+            os.makedirs(home + runName)
+
+        resultsPath = os.path.join(path, 'results')
+        newResultspath = os.path.join(home, runName, 'validationResults')
+        shutil.copytree(resultsPath, newResultspath)
