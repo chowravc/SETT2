@@ -52,6 +52,20 @@ from xml.dom import minidom
 
 def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMax, decrossMin):
 
+    """
+    Kick off simulation process
+
+    Args:
+       home (str): Home directory of project (defectSimulation in this case)
+       runName (str): Name of run folder - unless told otherwise in the form of 'run DD/MM/YY/hh/mm/ss'
+       numImages (int): the number of images to generate
+       imageDims (int): dimensions of images to create 
+       maxDefects (int): The maximum amount of defects a generated image can have
+       minDefects (int): The minimum amount of defects that can be present in a generated image
+       decrossMin (float): An unused prameter for something - will add use later - ADAM LOOK HERE
+       decrossMax (float): An unused prameter for something - will add use later - ADAM LOOK HERE
+    """
+
     print("Generating Defects")
 
     #Creates Defects
@@ -138,6 +152,15 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
 
 
 def datAnnotate(home, runName):
+
+    """
+        Data annotation method, lables immages
+
+        Args:
+           home (str): Home directory of project (defectSimulation in this case)
+           runName (str): Name of run folder - unless told otherwise in the form of 'run DD/MM/YY/hh/mm/ss'
+    """
+
     reset = os.getcwd()
     os.chdir(home+"/"+runName)
     files = glob.glob('*defect*.dat')
@@ -169,6 +192,16 @@ def datAnnotate(home, runName):
 
 
 def create_defects(numImages,dims,numDefects):
+
+    """
+        Add defects to images
+
+        Args:
+           numImages (int): Number of images generated that need defects added
+           dims (int): Dimmensions of image (passed as an array [x, y])
+           numDefects (int): Random number to determine how many defects are added to a given image
+    """
+
     baseDir = os.getcwd()
     dims.reverse()
 
@@ -195,6 +228,15 @@ def create_defects(numImages,dims,numDefects):
     os.chdir(runDir)
 
     def process(i,defects):
+
+        """
+                Run computation on multiple threads for faster run time
+
+                Args:
+                   i (int): Counter from 0 to numImages
+                   defects (int): Number of defects
+        """
+
         outdat = os.path.join(dataDir2,'out%d.dat' %(i))
         defectdat = os.path.join(dataDir2,'defect%d.dat' %(i))
         img = os.path.join(imDir,'image%d.bmp' %(i))
@@ -205,9 +247,27 @@ def create_defects(numImages,dims,numDefects):
     os.chdir(baseDir)
 
 def safeMake(dir):
+
+    """
+        Creates diretory if it does not already exist (prevents potential errors) - generalized for multiple calls with for different directory creations
+
+        Args:
+           dir (str): Name of directory to create
+          
+    """
+
     if not os.path.exists(dir):
         os.makedirs(dir)
 def safeRemake(dir):
+
+    """
+        Removes diretory if it exist (prevents potential errors) - generalized for multiple calls with for different directory names
+
+        Args:
+           dir (str): Name of directory to remove
+          
+    """
+
     if os.path.exists(dir):
         shutil.rmtree(dir)
 
@@ -265,13 +325,41 @@ def dGen(grid,x,y,k,off,xDim, yDim):
 
 
 def decrossII(beta,image):
+
+    """
+        Not sure - ADAM LOOK HERE
+
+        Args:
+           beta (str): some parameter
+           image (str): Image to decross
+          
+    """
+
     #beta is the angle between pol and anl (90 for completely crossed)
     temp= ( np.sin(image)*np.cos(image)*np.sin(beta)-np.sin(image)**2*np.cos(beta)-np.cos(beta))**2
     return temp/temp.max()
 
 def schler(angle):
+
+    """
+        Runs an equation on the number passed
+
+        Args:
+           angle (float): Angle to pass to equation
+          
+    """
+
     return np.sin(2.*angle)**2.
 def imgGen(decross):
+
+    """
+        Generates images as templates for sample data
+
+        Args:
+           decross (str): ADAM LOOK HERE
+          
+    """
+
     beta = (np.pi/2+decross/180*np.pi)
     names = glob.glob('accumulated/*out*.dat')
     frames = [decrossII(beta,np.loadtxt(n)) for n in names]
@@ -282,6 +370,16 @@ def imgGen(decross):
 
 
 def imgGenRand(decrossMin,decrossMax):
+
+    """
+        Generates images as templates for sample data, similar to imgGen. The only difference is this takes both decrossMin and decrossMax as arguements. 
+
+        Args:
+           decrossMin (str): ADAM LOOK HERE
+           decrossMax (str): ADAM LOOK HERE
+          
+    """
+
     decrossMean = (decrossMin+decrossMax)/2
     decrossDiff = decrossMax-decrossMin
     
@@ -301,6 +399,16 @@ def imgGenRand(decrossMin,decrossMax):
     
 
 def pointing(original_img , predictions):
+
+    """
+        Finds the confidencey, bounding box information, and predicted label of the simulated image.
+
+        Args:
+           origional_img (str): Path to image
+           predictions (str): The predictions the net has made about the images
+          
+    """
+
     newImage = np.copy(original_img)
 
     for result in predictions:
@@ -325,6 +433,16 @@ def pointing(original_img , predictions):
     
     
 def markSim(home, runName):
+
+    """
+        Image processing for marking simulated images
+
+        Args:
+           home (str): Home directory (in this case DefectSimulation)
+           runName (str): Name of run - unless told otherwise in the form of 'run DD/MM/YY/hh/mm/ss'
+          
+    """
+
     reset = os.getcwd()
     os.chdir(home + "\\" + runName)
     simmarkedFolder = home + "\\" + runName + '/SIMMARKED/'
@@ -360,6 +478,23 @@ def markSim(home, runName):
 # ------------------------------------------------------------------------------------------
 
 def fileConvert(filePath, outDir=None, delim = ' ', headerLines = 0, imageTag = '.jpg', imgSize = [250,250]):
+
+    """
+        This class is used to gather the information from the xml files outputted by yolo when it is run on its test images (I think).
+        It is difficult to follow when there are no comments. 
+
+        Args:
+           filePath (str): The image to run on
+           outDir (str): Output directoy (none by default)
+           delim (str): Deliminator specification (whitespace character by default, ' ')
+           headLines (int): Number of headline rows to skip when reading in data
+           imageTag (str): Type of file to save (default is jpeg)
+           imgSize ([int]): Dimensions of file passed as [x, y]
+          
+    """
+
+
+
     if outDir == None:
         outDir = os.path.join(os.path.split(filePath)[0],'out')
         
@@ -522,6 +657,17 @@ def fileConvert(filePath, outDir=None, delim = ' ', headerLines = 0, imageTag = 
         f.write(xml_str)
 
 def fileConvertBatch(targetDir,imgDims, ext='all'):
+
+
+    """
+        This class runs fileConvert on a large number of files (called here a 'batch'). Usefull for analyzing all outputted files in a directory.
+        
+        Args:
+           targetDir (str): The target directory
+           imgDims ([int]): Dimensions of each image (given as [x, y])
+           ext (str): File type specification (by default 'all')          
+    """
+
     
     filePatternCustom = os.path.join(targetDir, '*defect*.dat')
     filePatternTXT = os.path.join(targetDir, '*.txt')

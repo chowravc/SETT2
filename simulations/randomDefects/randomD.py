@@ -6,6 +6,18 @@ import random
 import argparse
 
 def randomD(decross,dims,nDefects, fileNames):
+
+    """
+        Not 100% sure what this is here for, ADAM TAKE A LOOK
+
+        Args:
+           decross (str): ADAM
+           dims ([int]): Dimensions of image
+           nDefects (int): Number of defects I think?
+           fileNames (str): Names of files
+          
+    """
+
     xDim = dims[0]
     yDim = dims[1]
     beta = np.pi/2+decross/180*np.pi

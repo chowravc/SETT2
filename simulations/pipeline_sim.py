@@ -8,6 +8,20 @@ import random
 import imp
 
 def simulate(targetLocation,k,beta,mu,N,endT,seed):
+
+  """
+      Meathod call to simulate data.
+
+      Args:
+         targetLocation (str):  path to data
+         k (int):  I have no idea - ADAM LOOK HERE
+         beta (int): I have no idea - ADAM LOOK HERE
+         mu (int): I have no idea - ADAM LOOK HERE
+         N (int): I have no idea - ADAM LOOK HERE
+         endT (int): I have no idea - ADAM LOOK HERE
+         seed (int): I have no idea - ADAM LOOK HERE
+    """
+
   simDir = os.path.join(os.getcwd(),'tmpFolder')
   targetLocation = os.path.join(os.getcwd(),targetLocation)
 
@@ -21,6 +35,14 @@ def simulate(targetLocation,k,beta,mu,N,endT,seed):
     cleanupDirectory(simDir)
   
 def setupEnvironment(simDir):
+
+  """
+    Creates necessary file structure for simulation data
+
+    Args:
+       simDir (str):  Path to simulation data (simDir = os.path.join(os.getcwd(),'tmpFolder'))
+  """
+
   sourceDir = os.path.dirname(os.path.realpath(__file__))
   if os.path.exists(simDir):
     shutil.rmtree(simDir)
@@ -32,6 +54,20 @@ def setupEnvironment(simDir):
   shutil.copyfile(os.path.join(sourceDir,'fortran','LandauGin','imgGen.py'), os.path.join(simDir,'imgGen.py'))
 
 def performSimulation(simDir,k,beta,mu,N,endT,seed):
+
+  """
+      Takes the parameters passed in the simulte meathod call and uses them to run the subprocess where the simulation is performed
+
+      Args:
+         targetLocation (str):  path to data
+         k (int):  I have no idea - ADAM LOOK HERE
+         beta (int): I have no idea - ADAM LOOK HERE
+         mu (int): I have no idea - ADAM LOOK HERE
+         N (int): I have no idea - ADAM LOOK HERE
+         endT (int): I have no idea - ADAM LOOK HERE
+         seed (int): I have no idea - ADAM LOOK HERE
+    """
+
   curDir = os.getcwd()
   os.chdir(simDir)
 
@@ -52,6 +88,15 @@ def performSimulation(simDir,k,beta,mu,N,endT,seed):
   os.chdir(curDir)
 
 def moveFiles(simDir,targetLocation):
+
+  """
+      Move files around in the newly created directory structure.
+
+      Args:
+         simDir (str): Current working directory, tempFolder location
+         targetLocation (str): Location to move to 
+    """
+
   tmp = os.getcwd()
   os.chdir(simDir)
   if not os.path.exists(targetLocation):
@@ -69,6 +114,14 @@ def moveFiles(simDir,targetLocation):
   os.chdir(tmp)
 
 def cleanupDirectory(simDir):
+
+  """
+      Removes simulation directory 
+
+      Args:
+         simDir (str): Current working directory, tempFolder location
+  """
+
   return
   shutil.rmtree(simDir)
 
