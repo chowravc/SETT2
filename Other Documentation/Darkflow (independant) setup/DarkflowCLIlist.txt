@@ -1,0 +1,29 @@
+To train the model on images, call the following command (but replace the file paths for --dataset and -- annotation to match your topology). This is in place of a build-yolo class,
+which hardcodes the arguements. The would look something like the following (this is not tailored for our project):
+
+																					from darkflow.net.build import TFNet
+
+																					options = {"model": "cfg/v1.1/yolov1.cfg", 
+																					           "load": "bin/yolo.weights", 
+																					           "threshold": 0.1, 
+																					           "gpu": 1.0}
+
+																					tfnet = TFNet(options)
+This is the  command line input used instead:
+
+	python flow --model cfg/v1.1/yolov1.cfg --labels one_label.txt --train --trainer adam --dataset "C:\Users\Eric\Desktop\Root\Work\LC Lab\Practice Dark\darkflow-master\train_im" --annotation "C:\Users\Eric\Desktop\Root\Work\LC Lab\Practice Dark\darkflow-master\train_xml" (--gpu 1.0)
+
+
+
+For validating the results of the above command, run the following. By default this will create a directory called "out" inside <path_to_imags> with the annotated images.
+
+	python flow --model cfg/v1.1/yolov1.cfg --imgdir <path_to_imgs> --load -1 --labels one_label.txt (--gpu 1.0)
+
+If the above code was used, the line to do this would be:
+																					results = tfnet.return_predict(original_img)
+
+
+
+
+	Helpful links:
+	1) https://towardsdatascience.com/yolov2-object-detection-using-darkflow-83db6aa5cf5f

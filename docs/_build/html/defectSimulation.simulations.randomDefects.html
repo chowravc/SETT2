@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>defectSimulation.simulations.randomDefects package &mdash; Sett2  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="defectSimulation.simulations package" href="defectSimulation.simulations.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Sett2
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">GIT</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="defectSimulation.html">defectSimulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defectSimulation.simulations.html">defectSimulation.simulations package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">defectSimulation.simulations.randomDefects package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defectsimulation-simulations-randomdefects-accumulate-module">defectSimulation.simulations.randomDefects.accumulate module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-defectSimulation.simulations.randomDefects.addArtifacts">defectSimulation.simulations.randomDefects.addArtifacts module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defectsimulation-simulations-randomdefects-call-defects-module">defectSimulation.simulations.randomDefects.call_defects module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-defectSimulation.simulations.randomDefects.markSim">defectSimulation.simulations.randomDefects.markSim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-defectSimulation.simulations.randomDefects.randomD">defectSimulation.simulations.randomDefects.randomD module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-defectSimulation.simulations.randomDefects.runSim">defectSimulation.simulations.randomDefects.runSim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-defectSimulation.simulations.randomDefects">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sett2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">GIT</a> &raquo;</li>
+        
+      <li>defectSimulation.simulations.randomDefects package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/defectSimulation.simulations.randomDefects.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="defectsimulation-simulations-randomdefects-package">
+<h1>defectSimulation.simulations.randomDefects package<a class="headerlink" href="#defectsimulation-simulations-randomdefects-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="defectsimulation-simulations-randomdefects-accumulate-module">
+<h2>defectSimulation.simulations.randomDefects.accumulate module<a class="headerlink" href="#defectsimulation-simulations-randomdefects-accumulate-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-defectSimulation.simulations.randomDefects.addArtifacts">
+<span id="defectsimulation-simulations-randomdefects-addartifacts-module"></span><h2>defectSimulation.simulations.randomDefects.addArtifacts module<a class="headerlink" href="#module-defectSimulation.simulations.randomDefects.addArtifacts" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.addArtifacts.addArtifacts">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.addArtifacts.</code><code class="sig-name descname">addArtifacts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cfg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.addArtifacts.addArtifacts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.addArtifacts.addArtifactsLocal">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.addArtifacts.</code><code class="sig-name descname">addArtifactsLocal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.addArtifacts.addArtifactsLocal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="defectsimulation-simulations-randomdefects-call-defects-module">
+<h2>defectSimulation.simulations.randomDefects.call_defects module<a class="headerlink" href="#defectsimulation-simulations-randomdefects-call-defects-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-defectSimulation.simulations.randomDefects.markSim">
+<span id="defectsimulation-simulations-randomdefects-marksim-module"></span><h2>defectSimulation.simulations.randomDefects.markSim module<a class="headerlink" href="#module-defectSimulation.simulations.randomDefects.markSim" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.markSim.markSim">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.markSim.</code><code class="sig-name descname">markSim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">home</span></em>, <em class="sig-param"><span class="n">runName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.markSim.markSim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image processing for marking simulated images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>home</strong> (<em>str</em>) – Home directory (in this case DefectSimulation)</p></li>
+<li><p><strong>runName</strong> (<em>str</em>) – Name of run - unless told otherwise in the form of ‘run DD/MM/YY/hh/mm/ss’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.markSim.pointing">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.markSim.</code><code class="sig-name descname">pointing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_img</span></em>, <em class="sig-param"><span class="n">predictions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.markSim.pointing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the confidencey, bounding box information, and predicted label of the simulated image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origional_img</strong> (<em>str</em>) – Path to image</p></li>
+<li><p><strong>predictions</strong> (<em>str</em>) – The predictions the net has made about the images</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-defectSimulation.simulations.randomDefects.randomD">
+<span id="defectsimulation-simulations-randomdefects-randomd-module"></span><h2>defectSimulation.simulations.randomDefects.randomD module<a class="headerlink" href="#module-defectSimulation.simulations.randomDefects.randomD" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.randomD.randomD">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.randomD.</code><code class="sig-name descname">randomD</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">decross</span></em>, <em class="sig-param"><span class="n">dims</span></em>, <em class="sig-param"><span class="n">nDefects</span></em>, <em class="sig-param"><span class="n">fileNames</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.randomD.randomD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not 100% sure what this is here for, ADAM TAKE A LOOK</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decross</strong> (<em>str</em>) – ADAM</p></li>
+<li><p><strong>dims</strong> (<em>[</em><em>int</em><em>]</em>) – Dimensions of image</p></li>
+<li><p><strong>nDefects</strong> (<em>int</em>) – Number of defects I think?</p></li>
+<li><p><strong>fileNames</strong> (<em>str</em>) – Names of files</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-defectSimulation.simulations.randomDefects.runSim">
+<span id="defectsimulation-simulations-randomdefects-runsim-module"></span><h2>defectSimulation.simulations.randomDefects.runSim module<a class="headerlink" href="#module-defectSimulation.simulations.randomDefects.runSim" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.create_defects">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">create_defects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numImages</span></em>, <em class="sig-param"><span class="n">dims</span></em>, <em class="sig-param"><span class="n">numDefects</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.create_defects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add defects to images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>numImages</strong> (<em>int</em>) – Number of images generated that need defects added</p></li>
+<li><p><strong>dims</strong> (<em>int</em>) – Dimmensions of image (passed as an array [x, y])</p></li>
+<li><p><strong>numDefects</strong> (<em>int</em>) – Random number to determine how many defects are added to a given image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.datAnnotate">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">datAnnotate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">home</span></em>, <em class="sig-param"><span class="n">runName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.datAnnotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data annotation method, lables immages</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>home</strong> (<em>str</em>) – Home directory of project (defectSimulation in this case)</p></li>
+<li><p><strong>runName</strong> (<em>str</em>) – Name of run folder - unless told otherwise in the form of ‘run DD/MM/YY/hh/mm/ss’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.decrossII">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">decrossII</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.decrossII" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not sure - ADAM LOOK HERE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>beta</strong> (<em>str</em>) – some parameter</p></li>
+<li><p><strong>image</strong> (<em>str</em>) – Image to decross</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.fileConvert">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">fileConvert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filePath</span></em>, <em class="sig-param"><span class="n">outDir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">delim</span><span class="o">=</span><span class="default_value">' '</span></em>, <em class="sig-param"><span class="n">headerLines</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">imageTag</span><span class="o">=</span><span class="default_value">'.jpg'</span></em>, <em class="sig-param"><span class="n">imgSize</span><span class="o">=</span><span class="default_value">[250, 250]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.fileConvert" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used to gather the information from the xml files outputted by yolo when it is run on its test images (I think).
+It is difficult to follow when there are no comments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filePath</strong> (<em>str</em>) – The image to run on</p></li>
+<li><p><strong>outDir</strong> (<em>str</em>) – Output directoy (none by default)</p></li>
+<li><p><strong>delim</strong> (<em>str</em>) – Deliminator specification (whitespace character by default, ‘ ‘)</p></li>
+<li><p><strong>headLines</strong> (<em>int</em>) – Number of headline rows to skip when reading in data</p></li>
+<li><p><strong>imageTag</strong> (<em>str</em>) – Type of file to save (default is jpeg)</p></li>
+<li><p><strong>imgSize</strong> (<em>[</em><em>int</em><em>]</em>) – Dimensions of file passed as [x, y]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.fileConvertBatch">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">fileConvertBatch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targetDir</span></em>, <em class="sig-param"><span class="n">imgDims</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.fileConvertBatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class runs fileConvert on a large number of files (called here a ‘batch’). Usefull for analyzing all outputted files in a directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>targetDir</strong> (<em>str</em>) – The target directory</p></li>
+<li><p><strong>imgDims</strong> (<em>[</em><em>int</em><em>]</em>) – Dimensions of each image (given as [x, y])</p></li>
+<li><p><strong>ext</strong> (<em>str</em>) – File type specification (by default ‘all’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.imgGen">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">imgGen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">decross</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.imgGen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates images as templates for sample data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>decross</strong> (<em>str</em>) – ADAM LOOK HERE</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.imgGenRand">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">imgGenRand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">decrossMin</span></em>, <em class="sig-param"><span class="n">decrossMax</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.imgGenRand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates images as templates for sample data, similar to imgGen. The only difference is this takes both decrossMin and decrossMax as arguements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decrossMin</strong> (<em>str</em>) – ADAM LOOK HERE</p></li>
+<li><p><strong>decrossMax</strong> (<em>str</em>) – ADAM LOOK HERE</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.markSim">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">markSim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">home</span></em>, <em class="sig-param"><span class="n">runName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.markSim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image processing for marking simulated images</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>home</strong> (<em>str</em>) – Home directory (in this case DefectSimulation)</p></li>
+<li><p><strong>runName</strong> (<em>str</em>) – Name of run - unless told otherwise in the form of ‘run DD/MM/YY/hh/mm/ss’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.pointing">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">pointing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_img</span></em>, <em class="sig-param"><span class="n">predictions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.pointing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the confidencey, bounding box information, and predicted label of the simulated image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origional_img</strong> (<em>str</em>) – Path to image</p></li>
+<li><p><strong>predictions</strong> (<em>str</em>) – The predictions the net has made about the images</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.runSim">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">runSim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">home</span></em>, <em class="sig-param"><span class="n">runName</span></em>, <em class="sig-param"><span class="n">numImages</span></em>, <em class="sig-param"><span class="n">imageDims</span></em>, <em class="sig-param"><span class="n">maxDefects</span></em>, <em class="sig-param"><span class="n">minDefects</span></em>, <em class="sig-param"><span class="n">decrossMax</span></em>, <em class="sig-param"><span class="n">decrossMin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.runSim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kick off simulation process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>home</strong> (<em>str</em>) – Home directory of project (defectSimulation in this case)</p></li>
+<li><p><strong>runName</strong> (<em>str</em>) – Name of run folder - unless told otherwise in the form of ‘run DD/MM/YY/hh/mm/ss’</p></li>
+<li><p><strong>numImages</strong> (<em>int</em>) – the number of images to generate</p></li>
+<li><p><strong>imageDims</strong> (<em>int</em>) – dimensions of images to create</p></li>
+<li><p><strong>maxDefects</strong> (<em>int</em>) – The maximum amount of defects a generated image can have</p></li>
+<li><p><strong>minDefects</strong> (<em>int</em>) – The minimum amount of defects that can be present in a generated image</p></li>
+<li><p><strong>decrossMin</strong> (<em>float</em>) – An unused prameter for something - will add use later - ADAM LOOK HERE</p></li>
+<li><p><strong>decrossMax</strong> (<em>float</em>) – An unused prameter for something - will add use later - ADAM LOOK HERE</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.safeMake">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">safeMake</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.safeMake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates diretory if it does not already exist (prevents potential errors) - generalized for multiple calls with for different directory creations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dir</strong> (<em>str</em>) – Name of directory to create</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.safeRemake">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">safeRemake</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.safeRemake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes diretory if it exist (prevents potential errors) - generalized for multiple calls with for different directory names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dir</strong> (<em>str</em>) – Name of directory to remove</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.simulations.randomDefects.runSim.schler">
+<code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">schler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">angle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.schler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs an equation on the number passed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>angle</strong> (<em>float</em>) – Angle to pass to equation</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-defectSimulation.simulations.randomDefects">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-defectSimulation.simulations.randomDefects" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="defectSimulation.simulations.html" class="btn btn-neutral float-left" title="defectSimulation.simulations package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Eric, Ravin
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
