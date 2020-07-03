@@ -281,6 +281,28 @@ Also creates .jpg files containing the schlieren texture, the same images with a
 </div>
 </dd></dl>
 
+<dl class="py function">
+<dt id="defectSimulation.sett2.validate">
+<code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">saveRun</span></em>, <em class="sig-param"><span class="n">runName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate model on a dataset through mAP</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>saveRun</strong> (<em>bool</em>) – choose whether or not to save the results to directory of runName</p></li>
+<li><p><strong>runName</strong> (<em>str</em>) – directory of run where results of validation will be saved</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p>validationResults: validation data files written to ../sett2/&lt;runName&gt;/ where base is the directory containing sett2</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>First put .xml files with actual defect locations to ../sett2/mAP/input/ground-truth/ and .json files (results from running model) to ../sett2/mAP/input/detection-results/</p>
+</div>
+</dd></dl>
+
 </div>
 <div class="section" id="module-defectSimulation">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-defectSimulation" title="Permalink to this headline">¶</a></h2>
