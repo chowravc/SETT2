@@ -5,7 +5,7 @@ import shutil
 
 
 def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax):
-    """Generate images and data of simulated smectic films with defects for training
+    """Generate images and data of simulated smectic films with defects for training.
 
     Args:
         runName (str, unless told otherwise as 'run DD/MM/YY/hh/mm/ss'): the name of the directory the output of this function will be stored in. If it already exists, nothing will be overwritten
@@ -55,7 +55,7 @@ def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, 
     os.chdir(home)
 
 def extractSmartNoise(crop, cropManual, cropX, cropY):
-    """Extract noise .jpg files from experimental images as .bmp files
+    """Extract noise .jpg files from experimental images as .bmp files.
 
     Args:
         crop (bool): Decide whether the experimental images should be cropped before extracting noise
@@ -95,7 +95,7 @@ def extractSmartNoise(crop, cropManual, cropX, cropY):
 
 
 def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise, numCircles, addGrid, gridRange, stds):
-	"""Enchance simulation images with various types of noise (including smart noise), bright circles, grids and standardisation to be used for training
+	"""Enchance simulation images with various types of noise (including smart noise), bright circles, grids and standardisation to be used for training.
 
     Args:
         runName (str): decides the simulation run that will have its images enchanced
@@ -135,7 +135,7 @@ def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise,
 
 
 def correctImages(imgExt, selectBox, autoBox, crop, stds):
-	"""Enchance data images with various types of noise (including smart noise) and standardisation to prepare them for running model
+	"""Enchance data images with various types of noise (including smart noise) and standardisation to prepare them for running model.
 
     Args:
         imgExt (str): extension of images to be corrected
@@ -169,7 +169,7 @@ def correctImages(imgExt, selectBox, autoBox, crop, stds):
 	correct.correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds)
 
 def validate(saveRun, runName):
-    """Validate model on a dataset through mAP
+    """Validate model on a dataset through mAP.
 
     Args:
         saveRun (bool): choose whether or not to save the results to directory of runName

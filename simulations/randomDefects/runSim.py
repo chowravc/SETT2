@@ -4,8 +4,6 @@ import random
 import shutil
 import sys
 import yaml
-#from addArtifacts import addArtifacts
-# from create_defects import create_defects
 
 # ------------- datAnnotate imports ----------------
 
@@ -43,30 +41,49 @@ from xml.dom import minidom
 #                                      Origional RunSim Class         
 # ------------------------------------------------------------------------------------------
 
-# def runSimLocal():
-#     with open("config.yml",'r') as ymlfile:
-#         cfg = yaml.safe_load(ymlfile)
-#     runSim(cfg)
-
-
-
 def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMax, decrossMin):
+    """Generate images and data of simulated smectic films with defects for training
+
+    Args:
+        home (str): home directory of sett2
+        runName (str, unless told otherwise as 'run DD/MM/YY/hh/mm/ss'): the name of the directory the output of this function will be stored in. If it already exists, nothing will be overwritten
+        numImages (int, optional): number of images the function should create
+        imageDims (list, optional): dimensions of the images to be simulated as [x, y] where both are int
+        maxDefects (int, optional): maximum number of defects an image can have
+        minDefects (int, optional): minimum number of defects an image can have
+        decrossMin (float, optional): minimum "Hourglass-ness" of a defect ADAM LOOK HERE
+        decrossMax (float, optional): maximum "Hourglass-ness" of a defect ADAM LOOK HERE
+
+    Writes:
+        *_defect*.dat: Writes defect location data files to ../sett2/<runName>
+        *_out*.dat: Writes spin data files to ../sett2/<runName>
+        *_defect*.jpg: Writes images of the schlieren texture to ../sett2/<runName>
+        *_defect*.txt: *defect*.dat converted to txt written to ../sett2/<runName>
+        *_defect*SIMMARKED.jpg: Writes images of schlieren texture with annotated defects to ../sett2/<runName>/SIMMARKED
+        *_defect*.xml: Writes defect bounding boxes in .xml format for YOLO training to ../sett2/<runName>/out
+
+    Note:
+        Creates *out*.dat files storing spins of individual molecules, *defect*.dat with defect locations marked.
+        Also creates .jpg files containing the schlieren texture, the same images with annotated defect locaions and
+        .xml files with defect locations to be used by YOLO.
+    """
 
     print("Generating Defects")
 
-    #Creates Defects
-    create_defects(numImages,imageDims,[minDefects,maxDefects])
-    mainDir = os.getcwd()
-    fileConvertPath = os.path.join(home, 'ImageAnnotation')
-    outDir = os.path.join(home, runName)
-
+    # Checks whether a run of the same name already exists.
     if os.path.exists(outDir):
         print("A previous run of the same name already exists. Please delete it or rename the run.")
         return
     if not os.path.exists(outDir):
         os.makedirs(outDir)
 
-    #Transfers generated files
+    # Creates Defects.
+    create_defects(numImages,imageDims,[minDefects,maxDefects])
+    mainDir = os.getcwd()
+    fileConvertPath = os.path.join(home, 'ImageAnnotation')
+    outDir = os.path.join(home, runName)
+
+    # Transfers generated files.
     allDDat = glob.glob('dataFolder/**/**/defect*.dat')
     print("Transfering defect.dat files")
     for dat in allDDat:
@@ -83,6 +100,7 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
         
     allODat = glob.glob('dataFolder/**/**/out*.dat')
     
+    # Transferring out generated data.
     datAnnotate(home, runName)
     print("Transfering out.dat files")
     for dat in allODat:
@@ -92,28 +110,20 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
         numPath = os.path.dirname(filePath)
         runNum = numPath.split('_')[-1]
         seedNum = filePath.split('-')[-1]
-        #print(seedNum)
         simNum = int(file.split('out')[-1].split('.dat')[0])
         
-        #print(simNum)
-        #if simNum>20:
         name = runNum+'_out'+str(simNum)+'.dat'
         newFilename = os.path.join(outDir,name)
         shutil.copyfile(dat,newFilename)
         
-
-    #Copies over imgGen.py to the output directory
-    #shutil.copyfile('imgGen.py',os.path.join(outDir,'imgGen.py'))
+    # Copies over imgGen.py to the output directory.
     sys.path.append(outDir)
     os.chdir(outDir)
 
-    # from imgGen import imgGenRand
-
     print("Generating Images")
 
-    #Creates defect images from data
+    # Creates defect images from data.
     imgGenRand(decrossMin, decrossMax)
-
 
     sys.path.append(fileConvertPath)
 
@@ -130,21 +140,26 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
     #addArtifacts()
     print("Done")
 
-
-
 # ------------------------------------------------------------------------------------------
 #                                      Data Annotate Class         
 # ------------------------------------------------------------------------------------------
 
-
 def datAnnotate(home, runName):
+    """Uses defect.dat files and converts them to text that get used to create bounding boxes.
+
+    Args:
+        home (str): home directory of sett2
+        runName (str): name of the run
+
+    Writes:
+        *defect*.txt: text files containing defect bounding box locations
+    """
     reset = os.getcwd()
     os.chdir(home+"/"+runName)
     files = glob.glob('*defect*.dat')
     for file in files:
         fExt = file.split('.')
         fpath = fExt[:-1]
-        #print(fpath)
         outFile = '.'.join(fpath)+'.txt'
         data = np.loadtxt(file)
 
@@ -153,7 +168,6 @@ def datAnnotate(home, runName):
         y = locs[1]
 
         numDefects = x.shape[0]
-        #print(outFile)
         f = open(outFile, "w")
         f.write('{}\r\n'.format(numDefects))
 
@@ -165,10 +179,17 @@ def datAnnotate(home, runName):
 #                                      Create Defects Class         
 # ------------------------------------------------------------------------------------------
 
-
-
-
 def create_defects(numImages,dims,numDefects):
+    """Uses defect.dat files and converts them to text that get used to create bounding boxes.
+
+    Args:
+        numImages (int): number of images to generate
+        dims (list): image dimensions in [x, y] where x, y are ints greater than 0
+        numDefects (list): range of number of defects in ints [x, y] with y greater than or equal to x
+
+    Writes:
+        *defect*.dat and *out*.dat files containing defect location and spin information respectively written to ../sett2/simulations/randomDefects/dataFolder/<runTime>
+    """
     baseDir = os.getcwd()
     dims.reverse()
 
@@ -183,8 +204,6 @@ def create_defects(numImages,dims,numDefects):
     runDir = os.path.join(dataDir,"run%d%d%d_%d%d%d" %(now.year,now.month,now.day,now.hour,now.minute,now.second))
     safeMake(runDir)
 
-
-
     dataDir2 = os.path.join(runDir,'data')
     imDir = os.path.join(runDir,'im')
     safeMake(dataDir2)
@@ -195,19 +214,37 @@ def create_defects(numImages,dims,numDefects):
     os.chdir(runDir)
 
     def process(i,defects):
+
         outdat = os.path.join(dataDir2,'out%d.dat' %(i))
         defectdat = os.path.join(dataDir2,'defect%d.dat' %(i))
         img = os.path.join(imDir,'image%d.bmp' %(i))
-        rD.randomD(decross,dims,defects, [outdat,defectdat,img])
+        rD.randomD(decross,dims,defects, [outdat, defectdat, img])
 
     Parallel(n_jobs=-1)(delayed(process)(i, random.randint(numDefects[0],numDefects[1])) for i in range(0,numImages))
 
     os.chdir(baseDir)
 
 def safeMake(dir):
+    """Safely creates a directory.
+
+    Args:
+        dir (str): directory to create
+
+    Writes:
+        dir: directory created if it does not exist
+    """
     if not os.path.exists(dir):
         os.makedirs(dir)
+
 def safeRemake(dir):
+    """Safely remakes a directory.
+
+    Args:
+        dir (str): directory to remake
+
+    Writes:
+        dir: directory removed and remade as empty
+    """
     if os.path.exists(dir):
         shutil.rmtree(dir)
 
@@ -265,14 +302,40 @@ def dGen(grid,x,y,k,off,xDim, yDim):
 
 
 def decrossII(beta,image):
-    #beta is the angle between pol and anl (90 for completely crossed)
-    temp= ( np.sin(image)*np.cos(image)*np.sin(beta)-np.sin(image)**2*np.cos(beta)-np.cos(beta))**2
-    return temp/temp.max()
+    """ADAM LOOK HERE
+
+    Args:
+        beta (float): the angle between polarisor and analyser in degrees (90 for completely crossed)
+
+    Returns:
+        out: ADAM LOOK HERE
+    """
+    temp= (np.sin(image)*np.cos(image)*np.sin(beta)-np.sin(image)**2*np.cos(beta)-np.cos(beta))**2
+    out = temp/temp.max()
+    return out
 
 def schler(angle):
-    return np.sin(2.*angle)**2.
+    """ADAM LOOK HERE
+
+    Args:
+        angle (float): the angle of local director at a point
+
+    Returns:
+        out: ADAM LOOK HERE
+    """
+    out = np.sin(2.*angle)**2.
+    return out
+
 def imgGen(decross):
-    beta = (np.pi/2+decross/180*np.pi)
+    """ADAM LOOK HERE
+
+    Args:
+        decross (float): ADAM LOOK HERE
+
+    Writes:
+        <image>.jpg
+    """
+    beta = (np.pi/2 + decross/180*np.pi)
     names = glob.glob('accumulated/*out*.dat')
     frames = [decrossII(beta,np.loadtxt(n)) for n in names]
     
@@ -282,6 +345,15 @@ def imgGen(decross):
 
 
 def imgGenRand(decrossMin,decrossMax):
+    """ADAM LOOK HERE
+
+    Args:
+        decrossMin (float): ADAM LOOK HERE
+        decrossMax (float): ADAM LOOK HERE
+
+    Writes:
+        <image>.jpg
+    """
     decrossMean = (decrossMin+decrossMax)/2
     decrossDiff = decrossMax-decrossMin
     
@@ -301,6 +373,19 @@ def imgGenRand(decrossMin,decrossMax):
     
 
 def pointing(original_img , predictions):
+    """Takes in an image and predictions and returns the image with high confidence predictions annotated.
+    
+    Args:
+        original_img (image): an array of int values
+        predictions (dictionary): a dictionary of predictions and characterestics
+
+    Returns:
+        newImage (image): an array of int values with bright red dots at prediction locations
+
+    Note:
+        Hard-coded to label predictions with confidence over 0.3.
+    """
+
     newImage = np.copy(original_img)
 
     for result in predictions:
@@ -318,13 +403,22 @@ def pointing(original_img , predictions):
         
         if confidence > 0.3:
             newImage = cv2.circle(newImage, (x, y), 2, (255,0,0), -1)
-            #newImage = cv2.putText(newImage, label, (top_x, top_y-5), cv2.FONT_HERSHEY_COMPLEX_SMALL , 0.8, (0, 230, 0), 1, cv2.LINE_AA)
-        
+
     return newImage
     
     
     
 def markSim(home, runName):
+    """Generates simulation images with marked defect locations.
+
+    Args:
+        home (str): home directory of SETT
+        runName (str): name of the run
+
+    Writes:
+        *defect*SIMMARKED.jpg: annotated image files written to ../sett2/<runName>/SIMMARKED
+    """
+
     reset = os.getcwd()
     os.chdir(home + runName)
     simmarkedFolder = home + runName + '/SIMMARKED/'
@@ -360,6 +454,20 @@ def markSim(home, runName):
 # ------------------------------------------------------------------------------------------
 
 def fileConvert(filePath, outDir=None, delim = ' ', headerLines = 0, imageTag = '.jpg', imgSize = [250,250]):
+    """Converts defect data files to xml files for training.
+
+        Args:
+            filePath (str): path of *defect*.dat files
+            outDir (str, optional): path where files will be written in filePath
+            delim (str, optional): ADAM LOOK HERE
+            headerLines (int, optional): header lines of xml file outputted
+            imageTag (str, optional): ADAM LOOK HERE
+            imageSize (list, optional): image dimensions in [x, y] where both are ints greater than 0
+
+        Writes:
+            *defect*.xml: xml files for training neural networks with bounding boxes around defects
+    """
+
     if outDir == None:
         outDir = os.path.join(os.path.split(filePath)[0],'out')
         
@@ -367,6 +475,7 @@ def fileConvert(filePath, outDir=None, delim = ' ', headerLines = 0, imageTag = 
         os.makedirs(outDir)
     imgxS = str(imgSize[0])
     imgyS = str(imgSize[1])
+
     # Import the CSV into numpy array
     defects = np.loadtxt(open(filePath,'rb'), delimiter=delim, skiprows = headerLines)
     defects = defects.astype(int)
@@ -522,7 +631,14 @@ def fileConvert(filePath, outDir=None, delim = ' ', headerLines = 0, imageTag = 
         f.write(xml_str)
 
 def fileConvertBatch(targetDir,imgDims, ext='all'):
-    
+    """Takes in files and converts them to xml for detection.
+
+    Args:
+        targetDir (str): directory containing files to convert
+        imgDims (list): image dimensions in [x, y] where both are ints greater than 0
+        ext (str): extension of files to be converted
+    """
+
     filePatternCustom = os.path.join(targetDir, '*defect*.dat')
     filePatternTXT = os.path.join(targetDir, '*.txt')
     filePatternDAT = os.path.join(targetDir, '*.dat')
