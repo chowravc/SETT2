@@ -37,7 +37,6 @@ def randomD(decross,dims,nDefects, fileNames):
         grid = np.mod(grid+k*np.arctan2(ix-x,iy-y)+off,2*np.pi)
         return grid
 
-
     for i in np.arange(nDefects):
         dxp = random.randint(0,xDim-1)
         dyp = random.randint(0,yDim-1)
@@ -49,6 +48,7 @@ def randomD(decross,dims,nDefects, fileNames):
         grid = dGen(grid,dxn,dyn,-1,random.random()*2*np.pi)
         dgrid[dxp,dyp] =1
         dgrid[dxn,dyn] =-1
+        
     imageio.imwrite(fileNames[2],skimage.img_as_ubyte(decrossI(beta, grid)))
     np.savetxt(fileNames[0],grid)
     np.savetxt(fileNames[1],dgrid)
@@ -59,4 +59,4 @@ if __name__ == "__main__":
     parser.add_argument('dims',nargs='?',help='simulation dimensions [x,y]',type = float,default = [100,100])
     args=parser.parse_args()
     
-    randomD(args.decross,args.dims,20)
+    randomD(args.decross, args.dims, 20)
