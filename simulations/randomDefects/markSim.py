@@ -9,6 +9,16 @@ import json
 
 
 def pointing(original_img , predictions):
+
+    """
+        Finds the confidencey, bounding box information, and predicted label of the simulated image.
+
+        Args:
+           origional_img (str): Path to image
+           predictions (str): The predictions the net has made about the images
+          
+    """
+
     newImage = np.copy(original_img)
 
     for result in predictions:
@@ -33,6 +43,16 @@ def pointing(original_img , predictions):
     
     
 def markSim(home, runName):
+
+    """
+        Image processing for marking simulated images
+
+        Args:
+           home (str): Home directory (in this case DefectSimulation)
+           runName (str): Name of run - unless told otherwise in the form of 'run DD/MM/YY/hh/mm/ss'
+          
+    """
+
     simmarkedFolder = home + runName + '/SIMMARKED/'
     files = glob.glob(runName+'/*defect*.dat')
 
