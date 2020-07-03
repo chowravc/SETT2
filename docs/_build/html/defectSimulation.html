@@ -169,9 +169,63 @@
 <div class="section" id="module-defectSimulation.sett2">
 <span id="defectsimulation-sett2-module"></span><h2>defectSimulation.sett2 module<a class="headerlink" href="#module-defectSimulation.sett2" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
+<dt id="defectSimulation.sett2.correctImages">
+<code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">correctImages</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">imgExt</span></em>, <em class="sig-param"><span class="n">selectBox</span></em>, <em class="sig-param"><span class="n">autoBox</span></em>, <em class="sig-param"><span class="n">crop</span></em>, <em class="sig-param"><span class="n">stds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.correctImages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enchance data images with various types of noise (including smart noise) and standardisation to prepare them for running model</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>imgExt (str): extension of images to be corrected
+selectBox (bool): selects a box to base correction on
+autoBox (bool): uses crop to automatically box part of image
+crop (list): [[x1, x2], [y1, y2]] selects x and y crop limits for autoBox
+stds (float): decides dynamic range of the image</p>
+</dd>
+<dt>Writes:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">*</span></a>.&lt;ext&gt;: corrected data image files written to &lt;base&gt;/data/collated/annotations/corrected where base is the directory containing sett2</p>
+</dd>
+<dt>Note:</dt><dd><p>First run this function to generate the directory structure to place images into</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="defectSimulation.sett2.enchanceImages">
+<code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">enchanceImages</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">runName</span></em>, <em class="sig-param"><span class="n">imgMean</span></em>, <em class="sig-param"><span class="n">imgStd</span></em>, <em class="sig-param"><span class="n">gaussian</span></em>, <em class="sig-param"><span class="n">doSmartNoise</span></em>, <em class="sig-param"><span class="n">smartNoise</span></em>, <em class="sig-param"><span class="n">numCircles</span></em>, <em class="sig-param"><span class="n">addGrid</span></em>, <em class="sig-param"><span class="n">gridRange</span></em>, <em class="sig-param"><span class="n">stds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.enchanceImages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enchance simulation images with various types of noise (including smart noise), bright circles, grids and standardisation to be used for training</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>runName (str): decides the simulation run that will have its images enchanced
+imgMean (list): choose the mean intensity an image can have; a list of two floats [x, y] with x lesser than or equal to y and both lesser than 1
+imgStd (list): choose the range of intensity ranges an image can have; a list of two floats [x, y] with x lesser than or equal to y and both strictly greater than 0
+gaussian (list): range of gaussian in units of sigma; a list of two floats [x, y] with x lesser than y
+doSmartNoise (bool): choose whether or not to add smart noise to simulated images
+smartNoise (list): range of intensity of smart noise; a list of two floats [x, y] with x lesser than or equal to y
+numCircles (int): choose how many bright circles to add to the simulated images; 0 to not add any
+addGrid (bool): splits the image into four random quadrants with random intensities
+gridRange (float): range over which quadrants can be brightened or dimmed
+stds (int): choose the intensity range an image can have</p>
+</dd>
+<dt>Writes:</dt><dd><p><em>_defect</em>.jpg: enchanced simulation image files written to ../sett2/&lt;runName&gt;/enchanced</p>
+</dd>
+<dt>Note:</dt><dd><p>To run this with smartNoise, first extractSmartNoise() needs to be run and noise files must be generated</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="defectSimulation.sett2.extractSmartNoise">
-<code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">extractSmartNoise</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.extractSmartNoise" title="Permalink to this definition">¶</a></dt>
-<dd><p>This meathod calls the noiseExtractor.py file to extract noise from sample images.</p>
+<code class="sig-prename descclassname">defectSimulation.sett2.</code><code class="sig-name descname">extractSmartNoise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">crop</span></em>, <em class="sig-param"><span class="n">cropManual</span></em>, <em class="sig-param"><span class="n">cropX</span></em>, <em class="sig-param"><span class="n">cropY</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.sett2.extractSmartNoise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract noise .jpg files from experimental images as .bmp files</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>crop (bool): Decide whether the experimental images should be cropped before extracting noise
+cropManual (bool): Decide whether all images should be cropped manually with individual limits
+cropX (int): crop width used when cropManual is False
+cropY (int): crop height used when cropManual is False</p>
+</dd>
+<dt>Writes:</dt><dd><p>noise*.jpg: Noise image files written to ../sett2/smartNoise/noiseSamples/noiseFiles</p>
+</dd>
+<dt>Note:</dt><dd><p>Input .bmp experimental images in the folder ..sett2/smartNoise/noiseSamples and decide 
+the region being used with cropping parameters. Noise will be extracted and images will be created 
+at ../sett2/smartNoise/noiseSamples/noiseFiles as .jpg files.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
