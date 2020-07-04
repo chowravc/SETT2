@@ -2,8 +2,9 @@ GIT
 ===
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    defectSimulation
+   defectSimulation.ImageAnnotation
    defectSimulation.simulations
    defectSimulation.simulations.randomDefects

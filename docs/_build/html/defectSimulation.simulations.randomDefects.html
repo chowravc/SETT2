@@ -245,14 +245,18 @@
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.create_defects">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">create_defects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numImages</span></em>, <em class="sig-param"><span class="n">dims</span></em>, <em class="sig-param"><span class="n">numDefects</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.create_defects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add defects to images</p>
+<dd><p>Uses defect.dat files and converts them to text that get used to create bounding boxes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>numImages</strong> (<em>int</em>) – Number of images generated that need defects added</p></li>
-<li><p><strong>dims</strong> (<em>int</em>) – Dimmensions of image (passed as an array [x, y])</p></li>
-<li><p><strong>numDefects</strong> (<em>int</em>) – Random number to determine how many defects are added to a given image</p></li>
+<li><p><strong>numImages</strong> (<em>int</em>) – number of images to generate</p></li>
+<li><p><strong>dims</strong> (<em>list</em>) – image dimensions in [x, y] where x, y are ints greater than 0</p></li>
+<li><p><strong>numDefects</strong> (<em>list</em>) – range of number of defects in ints [x, y] with y greater than or equal to x</p></li>
 </ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><em>defect</em>.dat and <em>out</em>.dat files containing defect location and spin information respectively written to ../sett2/simulations/randomDefects/dataFolder/&lt;runTime&gt;</p>
 </dd>
 </dl>
 </dd></dl>
@@ -260,13 +264,17 @@
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.datAnnotate">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">datAnnotate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">home</span></em>, <em class="sig-param"><span class="n">runName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.datAnnotate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Data annotation method, lables immages</p>
+<dd><p>Uses defect.dat files and converts them to text that get used to create bounding boxes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>home</strong> (<em>str</em>) – Home directory of project (defectSimulation in this case)</p></li>
-<li><p><strong>runName</strong> (<em>str</em>) – Name of run folder - unless told otherwise in the form of ‘run DD/MM/YY/hh/mm/ss’</p></li>
+<li><p><strong>home</strong> (<em>str</em>) – home directory of sett2</p></li>
+<li><p><strong>runName</strong> (<em>str</em>) – name of the run</p></li>
 </ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><em>defect</em>.txt: text files containing defect bounding box locations</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,13 +282,16 @@
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.decrossII">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">decrossII</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.decrossII" title="Permalink to this definition">¶</a></dt>
-<dd><p>Not sure - ADAM LOOK HERE</p>
+<dd><p>ADAM LOOK HERE</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>beta</strong> (<em>str</em>) – some parameter</p></li>
-<li><p><strong>image</strong> (<em>str</em>) – Image to decross</p></li>
-</ul>
+<dd class="field-odd"><p><strong>beta</strong> (<em>float</em>) – the angle between polarisor and analyser in degrees (90 for completely crossed)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ADAM LOOK HERE</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>out</p>
 </dd>
 </dl>
 </dd></dl>
@@ -288,18 +299,21 @@
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.fileConvert">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">fileConvert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filePath</span></em>, <em class="sig-param"><span class="n">outDir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">delim</span><span class="o">=</span><span class="default_value">' '</span></em>, <em class="sig-param"><span class="n">headerLines</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">imageTag</span><span class="o">=</span><span class="default_value">'.jpg'</span></em>, <em class="sig-param"><span class="n">imgSize</span><span class="o">=</span><span class="default_value">[250, 250]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.fileConvert" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class is used to gather the information from the xml files outputted by yolo when it is run on its test images (I think).
-It is difficult to follow when there are no comments.</p>
+<dd><p>Converts defect data files to xml files for training.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filePath</strong> (<em>str</em>) – The image to run on</p></li>
-<li><p><strong>outDir</strong> (<em>str</em>) – Output directoy (none by default)</p></li>
-<li><p><strong>delim</strong> (<em>str</em>) – Deliminator specification (whitespace character by default, ‘ ‘)</p></li>
-<li><p><strong>headLines</strong> (<em>int</em>) – Number of headline rows to skip when reading in data</p></li>
-<li><p><strong>imageTag</strong> (<em>str</em>) – Type of file to save (default is jpeg)</p></li>
-<li><p><strong>imgSize</strong> (<em>[</em><em>int</em><em>]</em>) – Dimensions of file passed as [x, y]</p></li>
+<li><p><strong>filePath</strong> (<em>str</em>) – path of <em>defect</em>.dat files</p></li>
+<li><p><strong>outDir</strong> (<em>str</em><em>, </em><em>optional</em>) – path where files will be written in filePath</p></li>
+<li><p><strong>delim</strong> (<em>str</em><em>, </em><em>optional</em>) – ADAM LOOK HERE</p></li>
+<li><p><strong>headerLines</strong> (<em>int</em><em>, </em><em>optional</em>) – header lines of xml file outputted</p></li>
+<li><p><strong>imageTag</strong> (<em>str</em><em>, </em><em>optional</em>) – ADAM LOOK HERE</p></li>
+<li><p><strong>imageSize</strong> (<em>list</em><em>, </em><em>optional</em>) – image dimensions in [x, y] where both are ints greater than 0</p></li>
 </ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><em>defect</em>.xml: xml files for training neural networks with bounding boxes around defects</p>
 </dd>
 </dl>
 </dd></dl>
@@ -307,13 +321,13 @@ It is difficult to follow when there are no comments.</p>
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.fileConvertBatch">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">fileConvertBatch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targetDir</span></em>, <em class="sig-param"><span class="n">imgDims</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.fileConvertBatch" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class runs fileConvert on a large number of files (called here a ‘batch’). Usefull for analyzing all outputted files in a directory.</p>
+<dd><p>Takes in files and converts them to xml for detection.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>targetDir</strong> (<em>str</em>) – The target directory</p></li>
-<li><p><strong>imgDims</strong> (<em>[</em><em>int</em><em>]</em>) – Dimensions of each image (given as [x, y])</p></li>
-<li><p><strong>ext</strong> (<em>str</em>) – File type specification (by default ‘all’)</p></li>
+<li><p><strong>targetDir</strong> (<em>str</em>) – directory containing files to convert</p></li>
+<li><p><strong>imgDims</strong> (<em>list</em>) – image dimensions in [x, y] where both are ints greater than 0</p></li>
+<li><p><strong>ext</strong> (<em>str</em>) – extension of files to be converted</p></li>
 </ul>
 </dd>
 </dl>
@@ -322,10 +336,14 @@ It is difficult to follow when there are no comments.</p>
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.imgGen">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">imgGen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">decross</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.imgGen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates images as templates for sample data</p>
+<dd><p>ADAM LOOK HERE</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>decross</strong> (<em>str</em>) – ADAM LOOK HERE</p>
+<dd class="field-odd"><p><strong>decross</strong> (<em>float</em>) – ADAM LOOK HERE</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p>&lt;image&gt;.jpg</p>
 </dd>
 </dl>
 </dd></dl>
@@ -333,13 +351,17 @@ It is difficult to follow when there are no comments.</p>
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.imgGenRand">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">imgGenRand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">decrossMin</span></em>, <em class="sig-param"><span class="n">decrossMax</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.imgGenRand" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates images as templates for sample data, similar to imgGen. The only difference is this takes both decrossMin and decrossMax as arguements.</p>
+<dd><p>ADAM LOOK HERE</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>decrossMin</strong> (<em>str</em>) – ADAM LOOK HERE</p></li>
-<li><p><strong>decrossMax</strong> (<em>str</em>) – ADAM LOOK HERE</p></li>
+<li><p><strong>decrossMin</strong> (<em>float</em>) – ADAM LOOK HERE</p></li>
+<li><p><strong>decrossMax</strong> (<em>float</em>) – ADAM LOOK HERE</p></li>
 </ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p>&lt;image&gt;.jpg</p>
 </dd>
 </dl>
 </dd></dl>
@@ -347,13 +369,17 @@ It is difficult to follow when there are no comments.</p>
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.markSim">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">markSim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">home</span></em>, <em class="sig-param"><span class="n">runName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.markSim" title="Permalink to this definition">¶</a></dt>
-<dd><p>Image processing for marking simulated images</p>
+<dd><p>Generates simulation images with marked defect locations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>home</strong> (<em>str</em>) – Home directory (in this case DefectSimulation)</p></li>
-<li><p><strong>runName</strong> (<em>str</em>) – Name of run - unless told otherwise in the form of ‘run DD/MM/YY/hh/mm/ss’</p></li>
+<li><p><strong>home</strong> (<em>str</em>) – home directory of SETT</p></li>
+<li><p><strong>runName</strong> (<em>str</em>) – name of the run</p></li>
 </ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">*</span></a>defect*SIMMARKED.jpg: annotated image files written to ../sett2/&lt;runName&gt;/SIMMARKED</p>
 </dd>
 </dl>
 </dd></dl>
@@ -361,44 +387,73 @@ It is difficult to follow when there are no comments.</p>
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.pointing">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">pointing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_img</span></em>, <em class="sig-param"><span class="n">predictions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.pointing" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds the confidencey, bounding box information, and predicted label of the simulated image.</p>
+<dd><p>Takes in an image and predictions and returns the image with high confidence predictions annotated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>origional_img</strong> (<em>str</em>) – Path to image</p></li>
-<li><p><strong>predictions</strong> (<em>str</em>) – The predictions the net has made about the images</p></li>
+<li><p><strong>original_img</strong> (<em>image</em>) – an array of int values</p></li>
+<li><p><strong>predictions</strong> (<em>dictionary</em>) – a dictionary of predictions and characterestics</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an array of int values with bright red dots at prediction locations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>newImage (image)</p>
+</dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Hard-coded to label predictions with confidence over 0.3.</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.runSim">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">runSim</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">home</span></em>, <em class="sig-param"><span class="n">runName</span></em>, <em class="sig-param"><span class="n">numImages</span></em>, <em class="sig-param"><span class="n">imageDims</span></em>, <em class="sig-param"><span class="n">maxDefects</span></em>, <em class="sig-param"><span class="n">minDefects</span></em>, <em class="sig-param"><span class="n">decrossMax</span></em>, <em class="sig-param"><span class="n">decrossMin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.runSim" title="Permalink to this definition">¶</a></dt>
-<dd><p>Kick off simulation process</p>
+<dd><p>Generate images and data of simulated smectic films with defects for training</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>home</strong> (<em>str</em>) – Home directory of project (defectSimulation in this case)</p></li>
-<li><p><strong>runName</strong> (<em>str</em>) – Name of run folder - unless told otherwise in the form of ‘run DD/MM/YY/hh/mm/ss’</p></li>
-<li><p><strong>numImages</strong> (<em>int</em>) – the number of images to generate</p></li>
-<li><p><strong>imageDims</strong> (<em>int</em>) – dimensions of images to create</p></li>
-<li><p><strong>maxDefects</strong> (<em>int</em>) – The maximum amount of defects a generated image can have</p></li>
-<li><p><strong>minDefects</strong> (<em>int</em>) – The minimum amount of defects that can be present in a generated image</p></li>
-<li><p><strong>decrossMin</strong> (<em>float</em>) – An unused prameter for something - will add use later - ADAM LOOK HERE</p></li>
-<li><p><strong>decrossMax</strong> (<em>float</em>) – An unused prameter for something - will add use later - ADAM LOOK HERE</p></li>
+<li><p><strong>home</strong> (<em>str</em>) – home directory of sett2</p></li>
+<li><p><strong>runName</strong> (<em>str</em><em>, </em><em>unless told otherwise as 'run DD/MM/YY/hh/mm/ss'</em>) – the name of the directory the output of this function will be stored in. If it already exists, nothing will be overwritten</p></li>
+<li><p><strong>numImages</strong> (<em>int</em><em>, </em><em>optional</em>) – number of images the function should create</p></li>
+<li><p><strong>imageDims</strong> (<em>list</em><em>, </em><em>optional</em>) – dimensions of the images to be simulated as [x, y] where both are int</p></li>
+<li><p><strong>maxDefects</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum number of defects an image can have</p></li>
+<li><p><strong>minDefects</strong> (<em>int</em><em>, </em><em>optional</em>) – minimum number of defects an image can have</p></li>
+<li><p><strong>decrossMin</strong> (<em>float</em><em>, </em><em>optional</em>) – minimum “Hourglass-ness” of a defect ADAM LOOK HERE</p></li>
+<li><p><strong>decrossMax</strong> (<em>float</em><em>, </em><em>optional</em>) – maximum “Hourglass-ness” of a defect ADAM LOOK HERE</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p><em>_defect</em>.dat: Writes defect location data files to ../sett2/&lt;runName&gt;
+<em>_out</em>.dat: Writes spin data files to ../sett2/&lt;runName&gt;
+<em>_defect</em>.jpg: Writes images of the schlieren texture to ../sett2/&lt;runName&gt;
+<em>_defect</em>.txt: <em>defect</em>.dat converted to txt written to ../sett2/&lt;runName&gt;
+<em>_defect*SIMMARKED.jpg: Writes images of schlieren texture with annotated defects to ../sett2/&lt;runName&gt;/SIMMARKED
+*_defect</em>.xml: Writes defect bounding boxes in .xml format for YOLO training to ../sett2/&lt;runName&gt;/out</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Creates <em>out</em>.dat files storing spins of individual molecules, <em>defect</em>.dat with defect locations marked.
+Also creates .jpg files containing the schlieren texture, the same images with annotated defect locaions and
+.xml files with defect locations to be used by YOLO.</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.safeMake">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">safeMake</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.safeMake" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates diretory if it does not already exist (prevents potential errors) - generalized for multiple calls with for different directory creations</p>
+<dd><p>Safely creates a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>dir</strong> (<em>str</em>) – Name of directory to create</p>
+<dd class="field-odd"><p><strong>dir</strong> (<em>str</em>) – directory to create</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p>dir: directory created if it does not exist</p>
 </dd>
 </dl>
 </dd></dl>
@@ -406,10 +461,14 @@ It is difficult to follow when there are no comments.</p>
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.safeRemake">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">safeRemake</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.safeRemake" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes diretory if it exist (prevents potential errors) - generalized for multiple calls with for different directory names</p>
+<dd><p>Safely remakes a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>dir</strong> (<em>str</em>) – Name of directory to remove</p>
+<dd class="field-odd"><p><strong>dir</strong> (<em>str</em>) – directory to remake</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Writes:</dt><dd><p>dir: directory removed and remade as empty</p>
 </dd>
 </dl>
 </dd></dl>
@@ -417,10 +476,16 @@ It is difficult to follow when there are no comments.</p>
 <dl class="py function">
 <dt id="defectSimulation.simulations.randomDefects.runSim.schler">
 <code class="sig-prename descclassname">defectSimulation.simulations.randomDefects.runSim.</code><code class="sig-name descname">schler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">angle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#defectSimulation.simulations.randomDefects.runSim.schler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs an equation on the number passed</p>
+<dd><p>ADAM LOOK HERE</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>angle</strong> (<em>float</em>) – Angle to pass to equation</p>
+<dd class="field-odd"><p><strong>angle</strong> (<em>float</em>) – the angle of local director at a point</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ADAM LOOK HERE</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>out</p>
 </dd>
 </dl>
 </dd></dl>

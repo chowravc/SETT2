@@ -3,6 +3,21 @@ from xml.dom import minidom
 import os
 
 def fileConvert(filePath, outDir=None, delim = ' ', headerLines = 0, imageTag = '.jpg', imgSize = [250,250]):
+    """Converts defect.dat files to xml format for training.
+
+    Args:
+        filePath (str): path containing defect.dat files
+        outdir (str, optional): path to output xml files to, defaulted to 'out' in filePath directory
+        delim (str, optional): defaults to ' '
+        headerLines (int, optional): defaults to 0
+        imageTag (str, optional): defaults to '.jpg'
+        imageSize (list, optional): dimensions of the images to be simulated as [x, y] where both are int, defaults to [250, 250]
+
+    Writes:
+        defect.xml training files to ../sett2/<runName>/out
+
+    """
+
     if outDir == None:
         outDir = os.path.join(os.path.split(filePath)[0],'out')
         
@@ -10,6 +25,7 @@ def fileConvert(filePath, outDir=None, delim = ' ', headerLines = 0, imageTag = 
         os.makedirs(outDir)
     imgxS = str(imgSize[0])
     imgyS = str(imgSize[1])
+
     # Import the CSV into numpy array
     defects = np.loadtxt(open(filePath,'rb'), delimiter=delim, skiprows = headerLines)
     defects = defects.astype(int)

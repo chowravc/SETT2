@@ -15,6 +15,10 @@ from skimage import data, color
 import sys
 import matplotlib.animation as animation
 import os
+
+"""Unused files. ADAM LOOK HERE
+"""
+
 def crop(image,startR,startC,square):
     image = color.rgb2grey(image)
     # return image[startR:startR+square,startC:startC+square]
@@ -46,6 +50,7 @@ pause = True
 defects = []
 #define simple animation function:
 f,(a1,a2) = plt.subplots(nrows=1,ncols=2)
+
 def animate(i):
 
     frame = frames[i]
@@ -172,12 +177,6 @@ class App_Window:
         self.dY =self.ZoomPoint.ydata-20+row
         self.zoomSubFig.add_patch(self.bBoxZoom)
         self.canvasZoom.draw()
-
-
-        #if (save == 'y'):
-        #    self.dNum = self.dNum+1
-        #    self.dList.append([self.dNum,row,col])
-
 
     def close_windows(self):
         print(self)

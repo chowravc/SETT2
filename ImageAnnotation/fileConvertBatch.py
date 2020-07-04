@@ -3,6 +3,17 @@ import os
 from fileConvert import fileConvert
 
 def fileConvertBatch(targetDir,imgDims, ext='all'):
+    """Chooses files that will be converted and converts defect.dat files to xml format for training.
+
+    Args:
+        targetDir (str): path containing defect.dat files
+        imageDims (list): dimensions of the images to be simulated as [x, y] where both are int
+        ext (str, optional): default extension of files to convert, defaults to all
+
+    Writes:
+        defect.xml training files to ../sett2/<runName>/out
+
+    """
     
     filePatternCustom = os.path.join(targetDir, '*defect*.dat')
     filePatternTXT = os.path.join(targetDir, '*.txt')
