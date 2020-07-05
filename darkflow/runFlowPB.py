@@ -11,6 +11,28 @@ import time
 
 
 def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
+    """Run a model to detect defects in images.
+
+    Args:
+        home (str): home directory of sett2
+        runTrained (bool): run a pretrained model?
+        gpu (int): 0 no gpu, 1 with gpu
+        threshold (float): threshold of detection between 0 and 1
+        jsonBool (bool): generate .json files with detection locations
+        extension (str): extension of image files to be detecting from
+        genMarkedImages (bool): generate images with results marked
+        saveAll (bool): save all results?
+
+    Writes:
+        *.json: defect detection locations and confidence to <base>/data/collated/annotations/corrected/OutIMG where base is the directory containing sett2
+        *.tif: defect detection locations marked in images to <base>/data/collated/annotations/corrected/OutIMG where base is the directory containing sett2
+
+    Note:
+        Rename your *.meta and *.pb files containing pretrained weights to yolo_custom_2 and copy to sett2/darkflow/built_graph.
+        Run this function to generate the directory structure to place images into if it does not already exist.
+        If it does, ensure that images to be used for detection are in <base>/data/collated/annotations/corrected/.
+
+    """
     
     box = 0 # 1 draws a box, 0 plots a point
 
@@ -26,6 +48,15 @@ def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedI
         return image
         
     def rgb2gray(rgb):
+        """Converts an rgb image tensor to a grayscale array
+
+        Args:
+            rgb (list): rgb image tensor
+
+        Returns:
+            gray (list): grayscale image array
+
+        """
 
         r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
         gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
@@ -77,15 +108,14 @@ def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedI
         
     def processImage(filename, tfnet,box):
         imgcv = cv2.imread(filename)
-        #imgcv = rgb2gray(imgcv)
+
         result = tfnet.return_predict(imgcv)
-        #print(result)
+        
         if box ==1:
             newImage = boxing(imgcv, result)
         else:
             newImage = pointing(imgcv, result)
             
-        
         im = Image.fromarray(newImage)
 
         return (im,result)
