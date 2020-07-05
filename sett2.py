@@ -206,6 +206,32 @@ def correctImages(imgExt, selectBox, autoBox, crop, stds):
 	# Calling function correctImages.
 	correct.correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds)
 
+def runModel():
+
+	print("Running Model")
+
+	darkflow = "/darkflow/"
+
+	home = os.getcwd() + "/defectSimulation/"
+
+	trainString = os.path.join(darkflow, 'runFlowPB.py')
+	functionName = 'runFlowCFG'
+
+	path, exFile = os.path.split(trainString)
+	reset = os.getcwd()
+	fullPath = home + path
+	sys.path.append(fullPath)
+	os.chdir(fullPath)
+
+	sim = imp.load_source('packages', exFile)
+	method = getattr(sim, functionName)
+
+	runTrained = True
+
+	method(home, runTrained)
+
+	os.chdir(reset)
+
 def validate(saveRun, runName):
     """Validate model on a dataset through mAP.
 
