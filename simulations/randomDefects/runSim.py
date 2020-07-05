@@ -71,11 +71,11 @@ def runSim(home, runName, numImages, imageDims, maxDefects, minDefects, decrossM
     print("Generating Defects")
 
     # Checks whether a run of the same name already exists.
-    if os.path.exists(outDir):
+    if os.path.exists(home+runName):
         print("A previous run of the same name already exists. Please delete it or rename the run.")
         return
-    if not os.path.exists(outDir):
-        os.makedirs(outDir)
+    if not os.path.exists(home+runName):
+        os.makedirs(home+runName)
 
     # Creates Defects.
     create_defects(numImages,imageDims,[minDefects,maxDefects])

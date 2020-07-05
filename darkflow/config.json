@@ -1,0 +1,24 @@
+{
+	"training_annotations": "E:/Projects/fake/simulations/randomDefects/accumulated/out",
+	"training_images": "E:/Projects/fake/simulations/randomDefects/accumulated/outMess",
+	"run_directory": "C:/Users/Eric Minor/TrackingML/simulations/randomDefects/accumulated/outMess",
+	"image_ext": "bmp",
+	"meta_file": "bin/defectG.meta", 
+	"pb_file": "bin/defectG.pb",
+	"validation_detection_path": "C:/Users/Eric Minor/TrackingML/simulations/randomDefects/accumulated/outMess/outIMG",
+	"validation_truth_path": "C:/Users/Eric Minor/TrackingML/simulations/randomDefects/accumulated/out",
+	"mAPPath": "../mAp",
+	
+	"threshold": 0.3,
+	"learning_rate": 1e-5,
+	"model": "cfg/yolo_custom2.cfg",
+	"batch_size": 8,
+	"epoch": 75,
+	
+    "starting_weights": "bin/yolo.weights",
+	"gpu_usage": 1.0,
+	"labels_file": "one_label.txt",	
+	"json": "True"
+	
+	
+}

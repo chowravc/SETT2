@@ -1,0 +1,7 @@
+python flow --model cfg/yoloNewer.cfg --labels one_label.txt --train --trainer adam --dataset "E:\Projects\defectTracker\BBox-Label-Tool\Images\001" --annotation "E:\Projects\defectTracker\BBox-Label-Tool\AnnotationsXML\001" --lr 0.001 --batch 2 --epoch 100 --gpu 1.0 
+
+
+
+python flow --model cfg/yolo-new.cfg --imgdir "E:\Projects\defectTracker\images" --load -1 --labels one_label.txt
+
+python flow --model cfg/yolo-new.cfg --imgdir C:\Users\Eric Minor\TrackingML\fake\images --load -1 --labels one_label.txt

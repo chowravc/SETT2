@@ -33,6 +33,8 @@ def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, 
     simString = 'simulations/randomDefects/runSim.py' # Path containing the runSim module.
     functionName = 'runSim' # Name of function being instantiated in runSim.
 
+    reset = os.getcwd()
+
     home = os.getcwd() + '/defectSimulation/' # Home directory of sett2.
 
     print("Running Simulation")
@@ -51,8 +53,9 @@ def simulate(runName, numImages, imageDims, maxDefects, minDefects, decrossMin, 
     # Calling function to simulate.
     runSimulation(home, runName, numImages, imageDims, maxDefects, minDefects, decrossMin, decrossMax)
 
-    # Changing directory back to home.
-    os.chdir(home)
+    # Changing directory back.
+    os.chdir(reset)
+
 
 def extractSmartNoise(crop, cropManual, cropX, cropY):
     """Extract noise .jpg files from experimental images as .bmp files.
@@ -132,6 +135,41 @@ def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise,
 
 	# Calling function addArtifacts.
 	artifacts.addArtifacts(home, runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoisePath, smartNoise, numCircles, addGrid, gridRange, stds)
+
+
+def train(runName):
+
+	print("Training Model")
+
+	home = os.getcwd() + "/defectSimulation/"
+	darkflow = "darkflow"
+	saveRun = True
+	model = "cfg/yolo_custom2.cfg"
+	load = "bin/yolov2-voc.weights"
+	batch = 8
+	epoch = 1
+	gpu = 0
+	learningRate = 1e-5
+	annotation = "../" + runName + "/out"
+	labels = "one_label.txt"
+	dataset = "../" + runName + "/enchanced"
+
+	trainString = os.path.join(darkflow, 'trainFlow.py')
+
+	functionName = 'trainFlowCFG'
+
+	path, exFile = os.path.split(trainString)
+	fullPath = os.path.join(home, path)
+	sys.path.append(fullPath)
+
+	os.chdir(fullPath)
+
+	sim = imp.load_source('packages', exFile)
+	method = getattr(sim, functionName)
+
+	method(home, darkflow, saveRun, model, load, batch, epoch, gpu, learningRate, annotation, labels, dataset)
+
+	os.chdir(home)
 
 
 def correctImages(imgExt, selectBox, autoBox, crop, stds):
