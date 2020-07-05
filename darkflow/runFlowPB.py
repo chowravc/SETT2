@@ -10,7 +10,7 @@ import json
 import time
 
 
-def runFlowCFG(home, runTrained):
+def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
     
     box = 0 # 1 draws a box, 0 plots a point
 
@@ -96,15 +96,9 @@ def runFlowCFG(home, runTrained):
     meta = "bin/defectT.meta"
     pb = "bin/defectT.pb"
 
-    gpu = 0
-    threshold = 0
     labels = "one_label.txt"
-    jsonBool = True
-    extension = "tif"
     saveNum = 10
     targetDir = "../../data/collated/annotations/corrected"
-    genMarkedImages = True
-    saveAll = True
 
     path, filename = os.path.split(modelPath)
     name, ext = os.path.splitext(filename)
@@ -151,7 +145,7 @@ def runFlowCFG(home, runTrained):
         if imNum == 3:
             imgStart = time.time()
 
-        print("Detecting defects in image " + repr(imNum))
+        print("Detecting defects in image " + repr(imNum) + " of " + repr(numFiles) + ".")
 
         (im,result) = processImage(filename,tfnet,box)
         imName = os.path.basename(filename)
@@ -163,13 +157,11 @@ def runFlowCFG(home, runTrained):
                 saveName = os.path.join(outDir,imName)
                 im.save(saveName)
 
-        
         numDets = len(result)
         
         for i in range(numDets):
             result[i]['confidence'] = float(result[i]['confidence'])
         
-        #print(result)
         dataJSON = json.dumps(result)
         prePost = imName.split(".")
         noEnd = prePost[0]

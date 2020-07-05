@@ -138,7 +138,18 @@ def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise,
 
 
 def train(runName):
+	"""Train a model. This is incomplete, a yolo.weights file is required.
 
+    Args:
+        runName (str): what the run should be named
+
+    Writes:
+        not completed
+
+    Note:
+        First run this function to generate the directory structure to place images into
+
+    """
 	print("Training Model")
 
 	home = os.getcwd() + "/defectSimulation/"
@@ -206,8 +217,28 @@ def correctImages(imgExt, selectBox, autoBox, crop, stds):
 	# Calling function correctImages.
 	correct.correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds)
 
-def runModel():
+def runModel(runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
+	"""Run a model to detect defects in images.
 
+    Args:
+    	runTrained (bool): run a pretrained model?
+    	gpu (int): 0 no gpu, 1 with gpu
+    	threshold (float): threshold of detection between 0 and 1
+    	jsonBool (bool): generate .json files with detection locations
+    	extension (str): extension of image files to be detecting from
+    	genMarkedImages (bool): generate images with results marked
+    	saveAll (bool): save all results?
+
+    Writes:
+        *.json: defect detection locations and confidence to <base>/data/collated/annotations/corrected/OutIMG where base is the directory containing sett2
+        *.tif: defect detection locations marked in images to <base>/data/collated/annotations/corrected/OutIMG where base is the directory containing sett2
+
+    Note:
+    	Rename your *.meta and *.pb files containing pretrained weights to yolo_custom_2 and copy to sett2/darkflow/built_graph.
+        Run this function to generate the directory structure to place images into if it does not already exist.
+        If it does, ensure that images to be used for detection are in <base>/data/collated/annotations/corrected/.
+
+    """
 	print("Running Model")
 
 	darkflow = "/darkflow/"
@@ -225,10 +256,7 @@ def runModel():
 
 	sim = imp.load_source('packages', exFile)
 	method = getattr(sim, functionName)
-
-	runTrained = True
-
-	method(home, runTrained)
+	method(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll)
 
 	os.chdir(reset)
 
