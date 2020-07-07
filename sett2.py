@@ -217,8 +217,8 @@ def correctImages(imgExt, selectBox, autoBox, crop, stds):
 	# Calling function correctImages.
 	correct.correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds)
 
-def runModel(runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
-	"""Run a model to detect defects in images.
+def runModel(runName, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
+    """Run a model to detect defects in images.
 
     Args:
     	runTrained (bool): run a pretrained model?
@@ -239,26 +239,38 @@ def runModel(runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, s
         If it does, ensure that images to be used for detection are in <base>/data/collated/annotations/corrected/.
 
     """
-	print("Running Model")
+    print("Running Model")
 
-	darkflow = "/darkflow/"
+    darkflow = "/darkflow/"
 
-	home = os.getcwd() + "/defectSimulation/"
+    home = os.getcwd() + "/defectSimulation/"
 
-	trainString = os.path.join(darkflow, 'runFlowPB.py')
-	functionName = 'runFlowCFG'
+    shutil.rmtree(home + darkflow + '/built_graph/')
+    os.mkdir(home + darkflow + '/built_graph/')
 
-	path, exFile = os.path.split(trainString)
-	reset = os.getcwd()
-	fullPath = home + path
-	sys.path.append(fullPath)
-	os.chdir(fullPath)
+    pbName = home + runName + "/" + runName + ".pb"
+    metaName = home + runName + "/" + runName + ".meta"
 
-	sim = imp.load_source('packages', exFile)
-	method = getattr(sim, functionName)
-	method(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll)
+    pbNewName = home + darkflow + '/built_graph/' + "yolo_custom2" + '.pb'
+    metaNewName = home + darkflow + '/built_graph/' + "yolo_custom2" + '.meta'
 
-	os.chdir(reset)
+    shutil.copyfile(pbName, pbNewName)
+    shutil.copyfile(metaName, metaNewName)
+
+    trainString = os.path.join(darkflow, 'runFlowPB.py')
+    functionName = 'runFlowCFG'
+
+    path, exFile = os.path.split(trainString)
+    reset = os.getcwd()
+    fullPath = home + path
+    sys.path.append(fullPath)
+    os.chdir(fullPath)
+
+    sim = imp.load_source('packages', exFile)
+    method = getattr(sim, functionName)
+    method(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll)
+
+    os.chdir(reset)
 
 def validate(saveRun, runName):
     """Validate model on a dataset through mAP.
