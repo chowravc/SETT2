@@ -69,9 +69,9 @@ def train(self):
 
         ckpt = (i+1) % (self.FLAGS.save // self.FLAGS.batch)
         args = [step_now, profile]
-        if not ckpt: _save_ckpt(self, *args)
+        #if not ckpt: _save_ckpt(self, *args)
 
-    if ckpt: _save_ckpt(self, *args)
+    #if ckpt: _save_ckpt(self, *args)
 
 def return_predict(self, im):
     assert isinstance(im, np.ndarray), \

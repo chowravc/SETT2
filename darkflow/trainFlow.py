@@ -6,7 +6,7 @@ import shutil
 import sys
 
 
-def trainFlowCFG(home, darkflowPath, saveRun, model, load, batch, epoch, gpu, learningRate, annotation, labels, dataset):
+def trainFlowCFG(home, runName, darkflowPath, saveRun, model, load, batch, epoch, gpu, learningRate, annotation, labels, dataset):
     ckptPath = 'ckpt'
     checkpointPath = 'ckpt/checkpoint'
     
@@ -29,8 +29,11 @@ def trainFlowCFG(home, darkflowPath, saveRun, model, load, batch, epoch, gpu, le
             "dataset": dataset}
             
     tfnet = TFNet(options)
+    print("Options loaded.")
     tfnet.train()
+    print("Train completed. Saving run. Please wait...")
     tfnet.savepb()
+    print("Saved pb.")
 
     if saveRun:
         modelPath = model
@@ -39,7 +42,7 @@ def trainFlowCFG(home, darkflowPath, saveRun, model, load, batch, epoch, gpu, le
 
     pathPB = os.path.join(home, darkflowPath, 'built_graph', name+'.pb')
     pathMeta = os.path.join(home, darkflowPath,'built_graph', name+'.meta')
-    savePathPB = os.path.join(home, 'runData', runName, runName+'.pb')
-    savePathMeta = os.path.join(home, 'runData', runName, runName+'.meta')
+    savePathPB = os.path.join(home, runName, runName+'.pb')
+    savePathMeta = os.path.join(home, runName, runName+'.meta')
     shutil.copyfile(pathPB,savePathPB)
     shutil.copyfile(pathMeta,savePathMeta)

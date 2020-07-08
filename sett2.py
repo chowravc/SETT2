@@ -178,7 +178,7 @@ def train(runName):
 	sim = imp.load_source('packages', exFile)
 	method = getattr(sim, functionName)
 
-	method(home, darkflow, saveRun, model, load, batch, epoch, gpu, learningRate, annotation, labels, dataset)
+	method(home, runName, darkflow, saveRun, model, load, batch, epoch, gpu, learningRate, annotation, labels, dataset)
 
 	os.chdir(home)
 
