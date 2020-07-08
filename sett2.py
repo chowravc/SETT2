@@ -137,11 +137,15 @@ def enchanceImages(runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoise,
 	artifacts.addArtifacts(home, runName, imgMean, imgStd, gaussian, doSmartNoise, smartNoisePath, smartNoise, numCircles, addGrid, gridRange, stds)
 
 
-def train(runName):
+def train(runName, batch, epoch, gpu, learningRate):
 	"""Train a model. This is incomplete, a yolo.weights file is required.
 
     Args:
         runName (str): what the run should be named
+        batch (int): image batch size
+        epoch (int): number of times to train over training set
+        gpu (int): 0 for no gpu, 1 for gpu
+        learning rate (float): express as xe-y
 
     Writes:
         not completed
@@ -157,10 +161,6 @@ def train(runName):
 	saveRun = True
 	model = "cfg/yolo_custom2.cfg"
 	load = "bin/yolov2-voc.weights"
-	batch = 8
-	epoch = 1
-	gpu = 0
-	learningRate = 1e-5
 	annotation = "../" + runName + "/out"
 	labels = "one_label.txt"
 	dataset = "../" + runName + "/enchanced"
