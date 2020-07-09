@@ -217,6 +217,43 @@ def correctImages(imgExt, selectBox, autoBox, crop, stds):
 	# Calling function correctImages.
 	correct.correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds)
 
+def tile(tilingLevel, imgExt):
+    """Break enchanced images into 4 tiles.
+
+    Args:
+        tilingLevel (int): number of times to do tiling
+        imgExt (str): extension of image files to tile without the dot
+
+    Writes:
+        *.<ext>: tiled data image files written to <base>/data/collated/annotations/corrected/<tile_level> where base is the directory containing sett2
+
+    Note:
+        If folder exists, tiling will fail
+
+    """
+
+    print("Breaking Images into tiles")
+
+    home = os.getcwd() + "/defectSimulation/"
+
+    # Default data corrected image folder.
+    imgCorrectedFolder = os.getcwd() + "/data/collated/annotations/corrected/"
+
+    tileString = os.path.join("imageTile/", 'createTile.py')
+    functionName = 'tileImage'
+
+    path, exFile = os.path.split(tileString)
+    reset = os.getcwd()
+    fullPath = home + path
+    sys.path.append(fullPath)
+    os.chdir(fullPath)
+
+    sim = imp.load_source('packages', exFile)
+    method = getattr(sim, functionName)
+    method(tilingLevel, imgCorrectedFolder, imgExt)
+
+    os.chdir(reset)
+
 def runModel(runName, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
     """Run a model to detect defects in images.
 
