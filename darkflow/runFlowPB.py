@@ -10,7 +10,7 @@ import json
 import time
 
 
-def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
+def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll, imageFolder):
     """Run a model to detect defects in images.
 
     Args:
@@ -22,6 +22,7 @@ def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedI
         extension (str): extension of image files to be detecting from
         genMarkedImages (bool): generate images with results marked
         saveAll (bool): save all results?
+        imageFolder (str): image folder for detection
 
     Writes:
         *.json: defect detection locations and confidence to <base>/data/collated/annotations/corrected/OutIMG where base is the directory containing sett2
@@ -128,7 +129,7 @@ def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedI
 
     labels = "one_label.txt"
     saveNum = 10
-    targetDir = "../../data/collated/annotations/corrected"
+    targetDir = imageFolder
 
     path, filename = os.path.split(modelPath)
     name, ext = os.path.splitext(filename)

@@ -4,7 +4,12 @@ import glob
 from PIL import Image
 import numpy as np
 
+def rgb2gray(rgb):
 
+    r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
+    gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
+
+    return gray
 
 def doTile(inputFolder, outputFolder, level, imgExt):
 	"""Break selected image into 4 tiles.
@@ -30,7 +35,9 @@ def doTile(inputFolder, outputFolder, level, imgExt):
 
 		#print("Image " + repr(i) + ".")
 
-		im = Image.open(filename)
+		im = cv2.imread(filename)
+		print(im)
+		return
 
 		imageName = filename.split(".")[0].split("\\")[-1]
 
@@ -39,23 +46,23 @@ def doTile(inputFolder, outputFolder, level, imgExt):
 		iN3 = outputFolder + imageName + "_3." + imgExt
 		iN4 = outputFolder + imageName + "_4." + imgExt
 
-		width, height = im.size
+		width, height = len(im), len(im[0])
 		xmid = width // 2
 		ymid = height // 2
 
-		im1 = im.crop((0, 0, xmid, ymid))
-		im2 = im.crop((xmid, 0, width, ymid))
-		im3 = im.crop((0, ymid, xmid, height))
-		im4 = im.crop((xmid, ymid, width, height))
+		im1 = im[0:ymid, 0:xmid]
+		im2 = im[0:ymid, xmid:width]
+		im3 = im[ymid:height, 0:xmid]
+		im4 = im[ymid:height, xmid:width]
 
-		im1.save(iN1)
-		im2.save(iN2)
-		im3.save(iN3)
-		im4.save(iN4)
+		cv2.imwrite(iN1, im1)
+		cv2.imwrite(iN2, im2)
+		cv2.imwrite(iN3, im3)
+		cv2.imwrite(iN4, im4)
 
 		i += 1
 
-def tileImage(tilingLevel, imgCorrectedFolder, imgExt):
+def tileImage(tilingLevel, imgFolder, imgExt):
 	"""Break enchanced images into 4 tiles.
 
     Args:
@@ -64,7 +71,7 @@ def tileImage(tilingLevel, imgCorrectedFolder, imgExt):
         imgExt (str): extension of image files to tile without the dot
 
     Writes:
-        *.<ext>: tiled data image files written to <base>/data/collated/annotations/corrected/<tile_level> where base is the directory containing sett2
+        *.<ext>: tiled data image files written to <base>/data/collated/annotations/<tile_level> where base is the directory containing sett2
 
     Note:
         If folder exists, tiling will fail
@@ -75,7 +82,7 @@ def tileImage(tilingLevel, imgCorrectedFolder, imgExt):
 
 	tile = "tile_"
 
-	outputFolder = imgCorrectedFolder
+	outputFolder = imgFolder
 
 	while level < tilingLevel:
 

@@ -183,7 +183,7 @@ def train(runName, batch, epoch, gpu, learningRate):
 	os.chdir(home)
 
 
-def correctImages(imgExt, selectBox, autoBox, crop, stds):
+def correctImages(imgExt, selectBox, autoBox, crop, stds, imgFolder):
 	"""Enchance data images with various types of noise (including smart noise) and standardisation to prepare them for running model.
 
     Args:
@@ -207,9 +207,6 @@ def correctImages(imgExt, selectBox, autoBox, crop, stds):
 
 	# Path to smart noise.
 	path = home + "/smartNoise/"
-
-	# Default data image folder.
-	imgFolder = "../data/collated/annotations"
 
 	# Loading correctImages.py.
 	correct = imp.load_source('packages', os.path.join(path,'correctImages.py'))
@@ -236,8 +233,8 @@ def tile(tilingLevel, imgExt):
 
     home = os.getcwd() + "/defectSimulation/"
 
-    # Default data corrected image folder.
-    imgCorrectedFolder = os.getcwd() + "/data/collated/annotations/corrected/"
+    # Default data image folder.
+    imgFolder = os.getcwd() + "/data/collated/annotations/"
 
     tileString = os.path.join("imageTile/", 'createTile.py')
     functionName = 'tileImage'
@@ -250,11 +247,11 @@ def tile(tilingLevel, imgExt):
 
     sim = imp.load_source('packages', exFile)
     method = getattr(sim, functionName)
-    method(tilingLevel, imgCorrectedFolder, imgExt)
+    method(tilingLevel, imgFolder, imgExt)
 
     os.chdir(reset)
 
-def runModel(runName, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll):
+def runModel(runName, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll, imageFolder):
     """Run a model to detect defects in images.
 
     Args:
@@ -305,7 +302,7 @@ def runModel(runName, runTrained, gpu, threshold, jsonBool, extension, genMarked
 
     sim = imp.load_source('packages', exFile)
     method = getattr(sim, functionName)
-    method(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll)
+    method(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedImages, saveAll, imageFolder)
 
     os.chdir(reset)
 
