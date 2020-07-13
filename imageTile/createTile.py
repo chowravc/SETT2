@@ -35,9 +35,10 @@ def doTile(inputFolder, outputFolder, level, imgExt):
 
 		#print("Image " + repr(i) + ".")
 
-		im = cv2.imread(filename)
-		print(im)
-		return
+		im = np.array(Image.open(filename))
+
+		if im.max() > 255:
+			im = (np.array(Image.open(filename))//16).astype('uint8')
 
 		imageName = filename.split(".")[0].split("\\")[-1]
 
@@ -46,7 +47,7 @@ def doTile(inputFolder, outputFolder, level, imgExt):
 		iN3 = outputFolder + imageName + "_3." + imgExt
 		iN4 = outputFolder + imageName + "_4." + imgExt
 
-		width, height = len(im), len(im[0])
+		width, height = len(im[0]), len(im)
 		xmid = width // 2
 		ymid = height // 2
 

@@ -28,6 +28,7 @@ def standardize(image,stds):
     #image = image*255
     image = np.clip(image,0,1)
     return image
+
 def standardizeCropped(image,croppedImg,stds):
     image = image.astype(np.float64)
     croppedImg = croppedImg.astype(np.float64)
@@ -94,7 +95,7 @@ def correctImagesCFG(home, imgFolder, imgExt, selectBox, autoBox, crop, stds):
     if not os.path.exists(outDir):
         os.makedirs(outDir)
 
-    filePattern = 	os.path.join(targetDir,"*." + imgExt)
+    filePattern = os.path.join(targetDir,"*." + imgExt)
     first = 1
     for filename in glob.glob(filePattern):
         
