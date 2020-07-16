@@ -234,7 +234,7 @@ def tile(tilingLevel, imgExt):
     home = os.getcwd() + "/defectSimulation/"
 
     # Default data image folder.
-    imgFolder = os.getcwd() + "/data/collated/annotations/"
+    imgFolder = os.getcwd() + "/data/collated/annotations/corrected/"
 
     tileString = os.path.join("imageTile/", 'createTile.py')
     functionName = 'tileImage'

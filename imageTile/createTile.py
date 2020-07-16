@@ -36,6 +36,7 @@ def doTile(inputFolder, outputFolder, level, imgExt):
 		#print("Image " + repr(i) + ".")
 
 		im = np.array(Image.open(filename))
+		#im = Image.open(filename)
 
 		if im.max() > 255:
 			im = (np.array(Image.open(filename))//16).astype('uint8')

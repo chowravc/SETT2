@@ -171,6 +171,7 @@ def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedI
     spacing = numFiles/saveNum
 
     imNum = 1
+    totalDets = 0
     for filename in files:
 
         if imNum == 3:
@@ -189,6 +190,7 @@ def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedI
                 im.save(saveName)
 
         numDets = len(result)
+        #print(numDets)
         
         for i in range(numDets):
             result[i]['confidence'] = float(result[i]['confidence'])
@@ -206,5 +208,6 @@ def runFlowCFG(home, runTrained, gpu, threshold, jsonBool, extension, genMarkedI
             print("Estimated time left: " + repr((numFiles-3)*(time.time() - imgStart)) + " seconds.")
 
         imNum = imNum + 1
-    print("Done")
+        totalDets += numDets
+    print("Done", repr(totalDets))
     print()
