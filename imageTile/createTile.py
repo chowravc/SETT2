@@ -42,12 +42,12 @@ def doTile(inputFolder, outputFolder, level, imgExt):
 			im = (np.array(Image.open(filename))//16).astype('uint8')
 
 		temp = filename.split("/")[-1]
-		imageName = temp[:-(len(imgExt) +1)]
+		imageName = temp[:-(len(imgExt) +1)] #REMOVE 10 BEFORE UPLOADING CODE
 		
-		iN1 = outputFolder + "tile_1/" + imageName + "_1." + imgExt
-		iN2 = outputFolder + "tile_2/" + imageName + "_2." + imgExt
-		iN3 = outputFolder + "tile_3/" + imageName + "_3." + imgExt
-		iN4 = outputFolder + "tile_4/" + imageName + "_4." + imgExt
+		iN1 = outputFolder + "a/" + imageName + "_1." + imgExt
+		iN2 = outputFolder + "b/" + imageName + "_2." + imgExt
+		iN3 = outputFolder + "c/" + imageName + "_3." + imgExt
+		iN4 = outputFolder + "d/" + imageName + "_4." + imgExt
 
 		width, height = len(im[0]), len(im)
 		xmid = width // 2
@@ -98,9 +98,9 @@ def tileImage(tilingLevel, imgFolder, imgExt):
 		outputFolder = inputFolder + tile + repr(level) + "/"
 
 		os.mkdir(outputFolder)
-		os.mkdir(outputFolder+"tile_1/")
-		os.mkdir(outputFolder+"tile_2/")
-		os.mkdir(outputFolder+"tile_3/")
-		os.mkdir(outputFolder+"tile_4/")
+		os.mkdir(outputFolder+"a/")
+		os.mkdir(outputFolder+"b/")
+		os.mkdir(outputFolder+"c/")
+		os.mkdir(outputFolder+"d/")
 
 		doTile(inputFolder, outputFolder, level, imgExt)
