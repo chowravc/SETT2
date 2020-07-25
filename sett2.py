@@ -275,11 +275,11 @@ def runModel(runName, runTrained, gpu, threshold, jsonBool, extension, genMarked
     """
     print("Running Model")
 
-    darkflow = "/darkflow/"
+    darkflow = "darkflow/"
 
     home = os.getcwd() + "/defectSimulation/"
 
-    shutil.rmtree(home + darkflow + '/built_graph/')
+    shutil.rmtree(home + darkflow + 'built_graph/')
     os.mkdir(home + darkflow + '/built_graph/')
 
     pbName = home + runName + "/" + runName + ".pb"
